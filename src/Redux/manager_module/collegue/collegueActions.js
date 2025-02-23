@@ -1,4 +1,4 @@
-import { fetchCollegueFromAPI } from "../../../Modules/ManagerModule/services/";
+import fetchCollegueFromAPI from "../../../Modules/ManagerModule/services/managerCollegueService";
 import {
     FETCH_COLLEGUES_REQUEST,
     FETCH_COLLEGUES_SUCCESS,

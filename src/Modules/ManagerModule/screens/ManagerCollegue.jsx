@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCollegues } from "../../../Redux/employee_module/collegue/collegueActions";
+import { fetchCollegues } from "../../../Redux/manager_module/collegue/collegueActions";
 import { useNavigate } from "react-router-dom";
 
 const ManagerColleagues = () => {
@@ -40,10 +40,10 @@ const ManagerColleagues = () => {
     );
 
   // Update headers: use "managerId" instead of "employeeId"
-  const headers = ["managerId", "name", "designation", "email"];
+  const headers = ["employeeId", "name", "designation", "email"];
 
   return (
-    <div className="container mx-auto mt-5 px-4 mb-20">
+    <div className="mx-20 container mx-auto mt-5 px-4 mb-20">
       <h2 className="text-3xl font-semibold mb-6 text-gray-800 underline">
         My Collegues
       </h2>
