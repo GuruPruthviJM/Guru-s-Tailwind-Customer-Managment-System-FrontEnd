@@ -10,12 +10,15 @@ import managerTicketReducer from './manager_module/managerTicketTable/managerTic
 import customerDetailsEditReducer from './customer_model/CustomerProfile/customerProfileEditReducers';
 import employeeDetailsReducer from './employee_module/details/detailsReducers';
 import employeeDetailsEditReducer from './employee_module/details/editReducers';
-import managerDetailsReducer from './manager_module/details/detailsReducers'
+import managerDetailsReducer from './manager_module/details/detailsReducers';
+import managerDetailsEditReducer from './manager_module/details/editReducers';
+import otpReducer from './signUp/otp/otpReducers';
 const rootReducer = {
     tickets: ticketReducer,
     payments: paymentReducer,
     auth: authReducer,
     signUp: signUpReducer,
+    otp: otpReducer,
     collegue: collegueReducer,
     managerStatus: managerStatusReducer,
     managerTicket: managerTicketReducer,
@@ -24,7 +27,7 @@ const rootReducer = {
     employeeDetails: employeeDetailsReducer,
     employeeDetailsEdit: employeeDetailsEditReducer,
     managerDetails: managerDetailsReducer,
- 
+    managerDetailsEdit: managerDetailsEditReducer,
 };
 
 export default rootReducer;

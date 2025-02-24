@@ -21,7 +21,7 @@ export const Header = () => {
   const userProfilePic = user?.profilePic || "/profile.png";
   // Assume user.user.roles is an array; take first role in lowercase
   const userType = user?.user?.roles?.[0]?.toLowerCase() || "guest";
-  const displayName = user?.user?.name || "User";
+  const displayName = user?.user?.userName || "User";
 
   const dispatch = useDispatch();
 

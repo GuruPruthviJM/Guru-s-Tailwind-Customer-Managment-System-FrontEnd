@@ -6,11 +6,11 @@ export const signUpSuccess = (userData) => ({ type: SIGNUP_SUCCESS, payload: use
 export const signUpFailure = (error) => ({ type: SIGNUP_FAILURE, payload: error });
 
 // src/redux/auth/signUpActions.js
-export const signUpUser = (fullName, username, email, phoneNumber, password) => async (dispatch) => {
+export const signUpUser = (customerData) => async (dispatch) => {
     dispatch(signUpRequest());
   
     try {
-      const userData = await signUpService(fullName, username, email, phoneNumber, password);
+      const userData = await signUpService(customerData);
       dispatch(signUpSuccess(userData));
     } catch (error) {
       dispatch(signUpFailure(error.response?.data?.message || "Signup failed"));

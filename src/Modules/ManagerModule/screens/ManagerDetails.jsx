@@ -26,12 +26,20 @@ const ManagerList = () => {
     }
   }, [dispatch, user, id]);
 
+  let phoneKey = ""
+
+  if(id){
+    phoneKey="phoneNo"
+  }else{
+    phoneKey="phone_Number"
+  }
+
   // Define the fields to display and their labels
   const fieldsToDisplay = [
     { key: "name", label: "Employee Name" },
     { key: "managerId", label: "Employee UserName" },
     { key: "email", label: "Email" },
-    { key: "phoneNo", label: "Phone Number" },
+    { key: phoneKey, label: "Phone Number" },
     { key: "avgResolutionTime", label: "Avg Resolution Time" },
     { key: "avgResponseTime", label: "Avg Response Time" },
   ];
@@ -42,7 +50,7 @@ const ManagerList = () => {
   };
 
   const handleEdit = () => {
-    navigate("/employees/edits");
+    navigate("/managers/edits");
   };
 
   if (loading) return <p className="text-center">Loading...</p>;

@@ -21,6 +21,8 @@ import StatusTickets from './Modules/ManagerModule/screens/ManagerHome';
 import ManagerTicketList from './Modules/ManagerModule/screens/ManagerTickets';
 import ManagerColleagues from './Modules/ManagerModule/screens/ManagerCollegue';
 import ManagerList from './Modules/ManagerModule/screens/ManagerDetails';
+import ManagerEditForm from './Modules/ManagerModule/screens/ManagerEditForm';
+import OtpForm from './components/SignIn/OTPForm';
 
 export default function App() {
     const router = createBrowserRouter(
@@ -30,6 +32,7 @@ export default function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/reset' element={<Reset />} />
+          <Route path='/otp' element={<OtpForm />} />
           {/* Customer Module */}
           <Route path="/" element={<CustomerHome />} />  
           <Route path="/customers" element={<CustomerHome />} />  
@@ -53,6 +56,7 @@ export default function App() {
           <Route path='/managers/colleague' element={<ManagerColleagues />} />
           <Route path='/managers/profile' element={<ManagerList />} />
           <Route path='/managers/profile/:id' element={<ManagerList />} />
+          <Route path='/managers/edits' element={<ManagerEditForm />} />
         </Route>
     )
   );

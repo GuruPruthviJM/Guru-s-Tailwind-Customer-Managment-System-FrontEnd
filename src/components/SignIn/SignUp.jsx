@@ -1,6 +1,15 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { requestOtp } from "../../Redux/signUp/otp/otpActions"
+// We are not dispatching signUpUser immediately, but will pass the data to OTP page.
+ 
 const SignUp = () => {
+  const dispatch = useDispatch(); // Not used here directly for sign-up.
+  const navigate = useNavigate();
+  const { loading, error, user } = useSelector((state) => state.signUp);
+
   const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -10,17 +19,39 @@ const SignUp = () => {
   const [location, setLocationType] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
 
+  // If you want to show errors/success from Redux, you can use useEffect:
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+    if (user) {
+      toast.success("Sign Up Successful!");
+      navigate("/login");
+    }
+  }, [error, user, navigate]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
     if (!agreeTerms) {
-      alert("You must agree to the terms.");
+      toast.error("You must agree to the terms.");
       return;
     }
-    alert(`Sign Up Successful!\nName: ${fullName}\nEmail: ${email}`);
+
+    // Prepare user data
+    const userData = {
+      name: fullName,
+      username: userName,
+      phone_Number: phoneNumber,
+      email,
+      password,
+      location,
+    };
+    dispatch(requestOtp({email}))
+    navigate("/otp", { state: { userData } });
   };
 
   return (
@@ -48,7 +79,6 @@ const SignUp = () => {
                 required
               />
             </div>
-
             {/* User Name */}
             <div className="mb-5">
               <label className="block text-lg font-bold text-gray-700 mb-1">
@@ -63,7 +93,6 @@ const SignUp = () => {
                 required
               />
             </div>
-
             {/* Phone Number */}
             <div className="mb-5">
               <label className="block text-lg font-bold text-gray-700 mb-1">
@@ -80,7 +109,6 @@ const SignUp = () => {
                 required
               />
             </div>
-
             {/* Email */}
             <div className="mb-5">
               <label className="block text-lg font-bold text-gray-700 mb-1">
@@ -95,7 +123,6 @@ const SignUp = () => {
                 required
               />
             </div>
-
             {/* Password */}
             <div className="mb-5">
               <label className="block text-lg font-bold text-gray-700 mb-1">
@@ -110,7 +137,6 @@ const SignUp = () => {
                 required
               />
             </div>
-
             {/* Confirm Password */}
             <div className="mb-5">
               <label className="block text-lg font-bold text-gray-700 mb-1">
@@ -125,7 +151,6 @@ const SignUp = () => {
                 required
               />
             </div>
-
             {/* Location */}
             <div className="mb-5">
               <label className="block text-lg font-bold text-gray-700 mb-1">
@@ -147,7 +172,6 @@ const SignUp = () => {
                 <option value="Pune">Pune</option>
               </select>
             </div>
-
             {/* Terms and Conditions */}
             <div className="mb-5 flex items-center">
               <input
@@ -162,7 +186,6 @@ const SignUp = () => {
                 I agree to the terms and conditions
               </label>
             </div>
-
             {/* Submit Button */}
             <button
               type="submit"
