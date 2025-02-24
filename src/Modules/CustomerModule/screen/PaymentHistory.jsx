@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPayments } from "../../../Redux/customer_model/Payments/paymentActions";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PaymentList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { payments, loading, error } = useSelector((state) => state.payments);
-  const {user} = useSelector((state) => state.auth);
-  const customerId = user?.user?.userName
+  const { user } = useSelector((state) => state.auth);
+  const customerId = user?.user?.userName;
 
   useEffect(() => {
     if (customerId) {
       dispatch(fetchPayments(customerId));
     }
-  },[customerId, dispatch]);
+  }, [customerId, dispatch]);
 
   // Redirect to login if error indicates login is required
   useEffect(() => {
@@ -22,6 +22,18 @@ const PaymentList = () => {
       navigate("/login");
     }
   }, [error, navigate]);
+
+  // Helper function to format date as dd/mm/yyyy, hh:mm:ss
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const dd = String(date.getDate()).padStart(2, "0");
+    const mm = String(date.getMonth() + 1).padStart(2, "0"); // January is 0!
+    const yyyy = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${dd}/${mm}/${yyyy}, ${hours}:${minutes}:${seconds}`;
+  };
 
   if (loading)
     return (
@@ -65,7 +77,6 @@ const PaymentList = () => {
               <tr
                 key={index}
                 className="group transition duration-300 odd:bg-[#f2f2f2] even:bg-white hover:bg-[#438e9c]"
-                // onClick={() => handleClick(customerId, payment.payId)}
               >
                 <td className="py-3 px-6 border-t border-gray-200 text-blue-600 group-hover:bg-black group-hover:text-white">
                   {payment.payId}
@@ -77,7 +88,7 @@ const PaymentList = () => {
                   {payment.department}
                 </td>
                 <td className="py-3 px-6 border-t border-gray-200 group-hover:bg-black group-hover:text-white">
-                  {new Date(payment.paymentDate).toLocaleDateString("en-GB")}
+                  {formatDate(payment.paymentDate)}
                 </td>
               </tr>
             ))}

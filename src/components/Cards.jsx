@@ -13,35 +13,35 @@ const services = [
     description:
       "Building scalable and robust platforms to drive digital transformation and innovation.",
     imgSrc: "/PPE.jpg",
-    location: "Bangalore",
+    location: "Hyderabad",
   },
   {
     title: "Digital Transformation",
     description:
       "Empowering businesses with cutting-edge digital solutions for the modern era.",
     imgSrc: "/Digital_Transformation_Consulting.jpg",
-    location: "Bangalore",
+    location: "Chennai",
   },
   {
     title: "Consulting",
     description:
       "Expert strategic guidance to navigate complex business challenges and drive growth.",
     imgSrc: "/Design_and_content_Innovation.jpg",
-    location: "Bangalore",
+    location: "Gurgaon",
   },
   {
     title: "Customer Service Transformation",
     description:
       "Enhancing customer experiences through innovative service solutions.",
     imgSrc: "/Customer_Experience_Transformation.jpg",
-    location: "Bangalore",
+    location: "Pune",
   },
   {
     title: "Infrastructure Cloud and Security",
     description:
       "Explore additional offerings to boost your business capabilities.",
     imgSrc: "/Infrastructure_cloud_and_security.jpg",
-    location: "Bangalore",
+    location: "Mysore",
   },
 ];
 

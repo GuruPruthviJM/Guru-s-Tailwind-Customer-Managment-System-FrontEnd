@@ -59,11 +59,13 @@ const Payment = () => {
   useEffect(() => {
     if (prevLoading && !loading && !error) {
       toast.success("Payment Successful!", { position: "top-right" });
-      navigate('/customers')
-      setCustomerId(user?.user?.userName || "");
-      setPaymentType("GPay");
-      setPurchaseItem("Customer-Experience-Transformation");
-      setAgreeTerms(false);
+      setTimeout(()=>{
+        navigate('/customers');
+        setCustomerId(user?.user?.userName || "");
+        setPaymentType("GPay");
+        setPurchaseItem("Customer-Experience-Transformation");
+        setAgreeTerms(false);
+      }, 2000)
     }
     if (error) {
       toast.error(error, { position: "top-right" });

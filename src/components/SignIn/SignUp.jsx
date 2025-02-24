@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { requestOtp } from "../../Redux/signUp/otp/otpActions"
-// We are not dispatching signUpUser immediately, but will pass the data to OTP page.
- 
+import { requestOtp } from "../../Redux/signUp/otp/otpActions";
+
 const SignUp = () => {
-  const dispatch = useDispatch(); // Not used here directly for sign-up.
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, user } = useSelector((state) => state.signUp);
 
@@ -16,10 +15,10 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [location, setLocationType] = useState("");
+  // Changed from location to pincode
+  const [pincode, setPincode] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
 
-  // If you want to show errors/success from Redux, you can use useEffect:
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -41,16 +40,17 @@ const SignUp = () => {
       return;
     }
 
-    // Prepare user data
+    // Prepare user data, now using pincode instead of location
     const userData = {
       name: fullName,
       username: userName,
       phone_Number: phoneNumber,
       email,
       password,
-      location,
+      pincode,
     };
-    dispatch(requestOtp({email}))
+
+    dispatch(requestOtp({ email }));
     navigate("/otp", { state: { userData } });
   };
 
@@ -151,26 +151,19 @@ const SignUp = () => {
                 required
               />
             </div>
-            {/* Location */}
+            {/* Pincode */}
             <div className="mb-5">
               <label className="block text-lg font-bold text-gray-700 mb-1">
-                Choose Location:
+                Pincode:
               </label>
-              <select
-                className="w-full p-3 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
-                value={location}
-                onChange={(e) => setLocationType(e.target.value)}
+              <input
+                type="text"
+                className="w-full p-3 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                value={pincode}
+                onChange={(e) => setPincode(e.target.value)}
+                placeholder="Enter your pincode"
                 required
-              >
-                <option value="" disabled>
-                  Select
-                </option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Chennai">Chennai</option>
-                <option value="Gurgaon">Gurgaon</option>
-                <option value="Pune">Pune</option>
-              </select>
+              />
             </div>
             {/* Terms and Conditions */}
             <div className="mb-5 flex items-center">
@@ -196,6 +189,7 @@ const SignUp = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -27,7 +27,7 @@ const CustomerList = () => {
     { key: "customerID", label: "User Name" },
     { key: "email", label: "Email" },
     { key: "phone_Number", label: "Phone Number" },
-    { key: "location", label: "Location" },
+    { key: "pincode", label: "pincode" },
   ];
 
   const handleLogout = () => {

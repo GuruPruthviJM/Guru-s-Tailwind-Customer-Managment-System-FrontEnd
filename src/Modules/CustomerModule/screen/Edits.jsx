@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateCustomerDetails, resetUpdateCustomerDetails } from "../../../Redux/customer_model/CustomerProfile/customerProfileEditActions"; // adjust path as needed
+import { updateCustomerDetails, resetUpdateCustomerDetails } from "../../../Redux/customer_model/CustomerProfile/customerProfileEditActions";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,6 @@ const EditForm = () => {
   const { customerDetails, loading, error } = useSelector(
     (state) => state.customerDetails
   );
-  // Assuming your update reducer is in the same slice. If it's in a separate slice, adjust accordingly.
   const { updateSuccess } = useSelector((state) => state.customerDetailsEdit);
   const { user } = useSelector((state) => state.auth);
 
@@ -19,7 +18,7 @@ const EditForm = () => {
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
+  const [pincode, setPincode] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
 
   // Auto-populate form fields when customerDetails is available
@@ -29,7 +28,8 @@ const EditForm = () => {
       setUserName(user?.user?.userName || "");
       setPhoneNumber(customerDetails.phone_Number || "");
       setEmail(customerDetails.email || "");
-      setLocation(customerDetails.location || "");
+      // Assuming customerDetails now contains "pincode" instead of "location"
+      setPincode(customerDetails.pincode || "");
     }
   }, [customerDetails, user]);
 
@@ -40,7 +40,7 @@ const EditForm = () => {
       setTimeout(() => {
         navigate("/customers");
         dispatch(resetUpdateCustomerDetails());
-      }, 3000); // 2 seconds delay
+      }, 3000);
     }
   }, [updateSuccess, dispatch, navigate]);
   
@@ -51,12 +51,12 @@ const EditForm = () => {
       alert("Please agree to the terms and conditions");
       return;
     }
-    // Prepare the data payload to update
+    // Prepare the data payload to update, using pincode instead of location
     const updatedData = {
       name: fullName,
       phone_Number: phoneNumber,
       email: email,
-      location: location,
+      pincode: pincode,
     };
 
     // Dispatch the update action using the user's username as the identifier.
@@ -132,26 +132,19 @@ const EditForm = () => {
                 required
               />
             </div>
-            {/* Choose Location */}
+            {/* Pincode */}
             <div className="mb-4">
               <label className="block mb-1 text-base font-semibold">
-                Choose Location:
+                Pincode:
               </label>
-              <select
-                className="w-full p-2 border border-gray-300 rounded bg-white focus:outline-none focus:border-blue-500"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
+              <input
+                type="text"
+                className="w-full p-2 border border-gray-300 rounded bg-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                value={pincode}
+                onChange={(e) => setPincode(e.target.value)}
+                placeholder="Enter your pincode"
                 required
-              >
-                <option value="" disabled>
-                  Select
-                </option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Chennai">Chennai</option>
-                <option value="Gurgaon">Gurgaon</option>
-                <option value="Pune">Pune</option>
-              </select>
+              />
             </div>
             {/* Terms and Conditions */}
             <div className="mb-4 flex items-center">
