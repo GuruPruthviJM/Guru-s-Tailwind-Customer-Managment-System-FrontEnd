@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchCustomerDetails } from "../../../Redux/customer_model/CustomerProfile/customerProfileActions";
 import { logout } from "../../../Redux/signUp/logIn/logInActions"; // Adjust path as needed
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const CustomerList = () => {
   const dispatch = useDispatch();
@@ -105,6 +106,7 @@ const CustomerList = () => {
           Logout
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };

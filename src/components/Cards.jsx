@@ -6,38 +6,42 @@ const services = [
     description:
       "AI powered solutions are transforming healthcare, improving diagnosis, patient care, and operational efficiency for a better future.",
     imgSrc: "/Data_and_AI.jpg",
+    location: "Bangalore",
   },
   {
     title: "Product & Platform Engineering",
     description:
       "Building scalable and robust platforms to drive digital transformation and innovation.",
     imgSrc: "/PPE.jpg",
+    location: "Bangalore",
   },
   {
     title: "Digital Transformation",
     description:
       "Empowering businesses with cutting-edge digital solutions for the modern era.",
     imgSrc: "/Digital_Transformation_Consulting.jpg",
+    location: "Bangalore",
   },
   {
     title: "Consulting",
     description:
       "Expert strategic guidance to navigate complex business challenges and drive growth.",
     imgSrc: "/Design_and_content_Innovation.jpg",
+    location: "Bangalore",
   },
   {
     title: "Customer Service Transformation",
     description:
       "Enhancing customer experiences through innovative service solutions.",
-    imgSrc:
-      "/Customer_Experience_Transformation.jpg",
+    imgSrc: "/Customer_Experience_Transformation.jpg",
+    location: "Bangalore",
   },
   {
     title: "Infrastructure Cloud and Security",
     description:
       "Explore additional offerings to boost your business capabilities.",
-    imgSrc:
-      "/Infrastructure_cloud_and_security.jpg",
+    imgSrc: "/Infrastructure_cloud_and_security.jpg",
+    location: "Bangalore",
   },
 ];
 
@@ -65,8 +69,11 @@ const Cards = () => {
                 <p className="text-[12px] text-[#555] leading-[1.4] mb-auto">
                   {service.description}
                 </p>
+                <p className="text-[12px] text-gray-600">
+                  Location: {service.location || "N/A"}
+                </p>
                 <a
-                  href="#"
+                  href="/customers/purchase"
                   className="bg-black border-0 uppercase font-bold w-full py-[8px] text-[12px] mt-2 block text-white"
                 >
                   PAY HERE →

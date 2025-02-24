@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPayment } from "../../../Redux/customer_model/Payments/paymentActions";
-import { useParams } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
+import { fetchPayments } from "../../../Redux/customer_model/Payments/paymentActions";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router";
 
 const Payment = () => {
   const [customerId, setCustomerId] = useState("");
@@ -12,15 +13,15 @@ const Payment = () => {
   const [amount, setAmount] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [prevLoading, setPrevLoading] = useState(false);
-
+  const navigate =useNavigate()
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.payments);
+  const { loading, error, payments } = useSelector((state) => state.payments);
   const { user } = useSelector((state) => state.auth);
-  // Removed direct setCustomerId here to avoid side-effects
-
-//   const { id: urlCustomerId } = useParams();
+  
   const urlCustomerId = user?.user?.userName;
   
+  
+  // Base item prices for each purchase item.
   const itemPrices = {
     "Customer-Experience-Transformation": 500,
     "Data-and-AI": 700,
@@ -30,28 +31,42 @@ const Payment = () => {
     "Infrastructure-Cloud-and-Security": 1800,
   };
 
-  // Auto-fill customerId from user data whenever it updates
+  const paidItems = payments ? payments.map(payment => payment.department) : [];
+  const availableItemPrices = Object.fromEntries(
+    Object.entries(itemPrices).filter(([key]) => !paidItems.includes(key))
+  );
+
+  useEffect(() => {
+    dispatch(fetchPayments(customerId));
+  },[customerId])
+
+
   useEffect(() => {
     setCustomerId(user?.user?.userName || "");
   }, [user]);
 
-  // Update amount when purchase item changes
+  
   useEffect(() => {
-    setAmount(itemPrices[purchaseItem] || "");
-  }, [purchaseItem]);
+    if (!availableItemPrices[purchaseItem] && Object.keys(availableItemPrices).length > 0) {
+      setPurchaseItem(Object.keys(availableItemPrices)[0]);
+    }
+  }, [availableItemPrices, purchaseItem]);
 
-  // Track payment success & show toast notifications
+  useEffect(() => {
+    setAmount(availableItemPrices[purchaseItem] || "");
+  }, [purchaseItem, availableItemPrices]);
+
   useEffect(() => {
     if (prevLoading && !loading && !error) {
       toast.success("Payment Successful!", { position: "top-right" });
-      // Reset form on success
+      navigate('/customers')
       setCustomerId(user?.user?.userName || "");
       setPaymentType("GPay");
       setPurchaseItem("Customer-Experience-Transformation");
       setAgreeTerms(false);
     }
     if (error) {
-        toast.error(error, { position: "top-right" });
+      toast.error(error, { position: "top-right" });
     }
     setPrevLoading(loading);
   }, [loading, error, user, prevLoading]);
@@ -66,6 +81,10 @@ const Payment = () => {
       toast.error("Customer ID does not match!", { position: "top-right" });
       return;
     }
+    if (!availableItemPrices[purchaseItem]) {
+      toast.error("This item has already been paid for!", { position: "top-right" });
+      return;
+    }
     const paymentData = { customerId, paymentType, department: purchaseItem, amount };
     dispatch(createPayment(urlCustomerId, paymentData));
   };
@@ -78,7 +97,6 @@ const Payment = () => {
             Payment Form
           </h2>
           <form onSubmit={handleSubmit}>
-            {/* Customer ID */}
             <div className="mb-4">
               <label className="block mb-1 text-base">Customer ID:</label>
               <input
@@ -89,7 +107,6 @@ const Payment = () => {
                 required
               />
             </div>
-            {/* Payment Type */}
             <div className="mb-4">
               <label className="block mb-1 text-base">Payment Type:</label>
               <select
@@ -103,7 +120,6 @@ const Payment = () => {
                 <option value="Paytm">Paytm</option>
               </select>
             </div>
-            {/* Purchase Item */}
             <div className="mb-4">
               <label className="block mb-1 text-base">Purchase Item:</label>
               <select
@@ -111,15 +127,19 @@ const Payment = () => {
                 value={purchaseItem}
                 onChange={(e) => setPurchaseItem(e.target.value)}
                 required
+                disabled={Object.keys(availableItemPrices).length === 0}
               >
-                {Object.keys(itemPrices).map((item) => (
-                  <option key={item} value={item}>
-                    {item.replace(/-/g, " ")}
-                  </option>
-                ))}
+                {Object.keys(availableItemPrices).length > 0 ? (
+                  Object.keys(availableItemPrices).map((item) => (
+                    <option key={item} value={item}>
+                      {item.replace(/-/g, " ")}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">No items available</option>
+                )}
               </select>
             </div>
-            {/* Amount */}
             <div className="mb-4">
               <label className="block mb-1 text-base">Amount (in Rs):</label>
               <input
@@ -130,7 +150,6 @@ const Payment = () => {
                 required
               />
             </div>
-            {/* Terms and Conditions */}
             <div className="mb-4 flex items-center">
               <input
                 type="checkbox"
@@ -144,11 +163,10 @@ const Payment = () => {
                 I agree to the terms and conditions
               </label>
             </div>
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded font-bold transition duration-200 hover:bg-blue-700"
-              disabled={loading}
+              disabled={loading || Object.keys(availableItemPrices).length === 0}
             >
               {loading ? "Processing..." : "Pay"}
             </button>

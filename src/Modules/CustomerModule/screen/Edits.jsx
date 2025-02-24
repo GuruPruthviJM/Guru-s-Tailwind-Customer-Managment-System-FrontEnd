@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCustomerDetails, resetUpdateCustomerDetails } from "../../../Redux/customer_model/CustomerProfile/customerProfileEditActions"; // adjust path as needed
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const EditForm = () => {
@@ -37,10 +37,13 @@ const EditForm = () => {
   useEffect(() => {
     if (updateSuccess) {
       toast.success("Customer details updated");
-      navigate("/customers");
-      dispatch(resetUpdateCustomerDetails());
+      setTimeout(() => {
+        navigate("/customers");
+        dispatch(resetUpdateCustomerDetails());
+      }, 3000); // 2 seconds delay
     }
   }, [updateSuccess, dispatch, navigate]);
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -174,6 +177,7 @@ const EditForm = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
