@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "../../Redux/signUp/signIn/signInActions"; // adjust path as needed
 import { verifyOtp, resetOtp } from "../../Redux/signUp/otp/otpActions"; // adjust path as needed
@@ -27,7 +27,7 @@ const OtpForm = () => {
       toast.success("Email verified successfully!");
       dispatch(signUpUser(userData));
       navigate("/login");
-      dispatch(resetOtp()); // Reset the verified flag after handling
+      dispatch(resetOtp()); 
     }
   }, [verified, dispatch, navigate, userData]);
 
@@ -64,6 +64,7 @@ const OtpForm = () => {
           {loading ? "Verifying..." : "Verify OTP & Sign Up"}
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

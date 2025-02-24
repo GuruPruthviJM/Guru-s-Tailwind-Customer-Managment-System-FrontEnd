@@ -1,7 +1,11 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+// Delay function: returns a promise that resolves after 'ms' milliseconds
+export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const requestOtpFromAPI = async (data) => {
-  try{
+  console.log(data);
+  try {
     const response = await axios.post(
       "https://localhost:7000/api/customers/validateTheOTP",
       data,
@@ -12,14 +16,18 @@ export const requestOtpFromAPI = async (data) => {
       }
     );
     return response.data;
-  }catch(error){
-    console.log("guru", error.response.message.data);
-    throw new Error(error.response.message.data);
+  } catch (error) {
+    const errorMsg = error?.response?.data?.message || "Email is already present";
+    toast.error(errorMsg);
+    await delay(2000);
+    window.location.href = "/login";
+    console.error("Error in requestOtpFromAPI:", error);
+    throw new Error(errorMsg);
   }
 };
 
 export const requestOtpForreset = async (data) => {
-  try{
+  try {
     const response = await axios.post(
       `https://localhost:7000/api/${data.roles}/generateOTP`,
       data,
@@ -30,14 +38,17 @@ export const requestOtpForreset = async (data) => {
       }
     );
     return response.data;
-  }catch(error){
-    throw new Error(error.response.message.data);
+  } catch (error) {
+    const errorMsg = error?.response?.data?.message || "Failed to request OTP for reset";
+    toast.error(errorMsg);
+    console.error("Error in requestOtpForreset:", error);
+    throw new Error(errorMsg);
   }
 };
 
 export const verifyOtpFromAPI = async (data) => {
-    console.log("guru",data);
-  try{
+  console.log("guru", data);
+  try {
     const response = await axios.post(
       "https://localhost:7000/api/customers/verifyOTP",
       data,
@@ -48,7 +59,10 @@ export const verifyOtpFromAPI = async (data) => {
       }
     );
     return response.data;
-  }catch(error){
-    throw new Error(error.response.message.data);
+  } catch (error) {
+    const errorMsg = error?.response?.data?.message || "Failed to verify OTP";
+    toast.error(errorMsg);
+    console.error("Error in verifyOtpFromAPI:", error);
+    throw new Error(errorMsg);
   }
 };
