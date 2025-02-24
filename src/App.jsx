@@ -20,6 +20,7 @@ import EmployeeEditForm from './Modules/EmployeeModule/screens/EmployeeEdits';
 import StatusTickets from './Modules/ManagerModule/screens/ManagerHome';
 import ManagerTicketList from './Modules/ManagerModule/screens/ManagerTickets';
 import ManagerColleagues from './Modules/ManagerModule/screens/ManagerCollegue';
+import ManagerList from './Modules/ManagerModule/screens/ManagerDetails';
 
 export default function App() {
     const router = createBrowserRouter(
@@ -50,6 +51,8 @@ export default function App() {
           <Route path='/managers' element={<StatusTickets />} />
           <Route path='/managers/tickets/:id' element={<ManagerTicketList />} />
           <Route path='/managers/colleague' element={<ManagerColleagues />} />
+          <Route path='/managers/profile' element={<ManagerList />} />
+          <Route path='/managers/profile/:id' element={<ManagerList />} />
         </Route>
     )
   );

@@ -43,7 +43,7 @@ const ManagerColleagues = () => {
   const headers = ["employeeId", "name", "designation", "email"];
 
   return (
-    <div className="mx-20 container mx-auto mt-5 px-4 mb-20">
+    <div className="mx-20 container mt-5 px-4 mb-20">
       <h2 className="text-3xl font-semibold mb-6 text-gray-800 underline">
         My Collegues
       </h2>

@@ -10,6 +10,7 @@ import managerTicketReducer from './manager_module/managerTicketTable/managerTic
 import customerDetailsEditReducer from './customer_model/CustomerProfile/customerProfileEditReducers';
 import employeeDetailsReducer from './employee_module/details/detailsReducers';
 import employeeDetailsEditReducer from './employee_module/details/editReducers';
+import managerDetailsReducer from './manager_module/details/detailsReducers'
 const rootReducer = {
     tickets: ticketReducer,
     payments: paymentReducer,
@@ -22,7 +23,8 @@ const rootReducer = {
     customerDetailsEdit: customerDetailsEditReducer,
     employeeDetails: employeeDetailsReducer,
     employeeDetailsEdit: employeeDetailsEditReducer,
-
+    managerDetails: managerDetailsReducer,
+ 
 };
 
 export default rootReducer;
