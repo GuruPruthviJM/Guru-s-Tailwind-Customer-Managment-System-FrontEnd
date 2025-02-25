@@ -23,6 +23,7 @@ import ManagerColleagues from './Modules/ManagerModule/screens/ManagerCollegue';
 import ManagerList from './Modules/ManagerModule/screens/ManagerDetails';
 import ManagerEditForm from './Modules/ManagerModule/screens/ManagerEditForm';
 import OtpForm from './components/SignIn/OTPForm';
+import AdminHome from './Modules/AdminModule/screen/AdminHomeScreen';
 
 export default function App() {
     const router = createBrowserRouter(
@@ -57,6 +58,8 @@ export default function App() {
           <Route path='/managers/profile' element={<ManagerList />} />
           <Route path='/managers/profile/:id' element={<ManagerList />} />
           <Route path='/managers/edits' element={<ManagerEditForm />} />
+          {/* Admin Module */}
+          <Route path='/admins' element={<AdminHome />} />
         </Route>
     )
   );
