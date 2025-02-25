@@ -1,37 +1,87 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import OutageMap from '../../../components/OutageMap';
+import React, { useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import OutageMap from "../../../components/OutageMap";
+import MyBarChart from "../../../components/barGraph";
+import { fetchTicketsCount } from "../../../Redux/admin_model/outage/outageActions";
+import { fetchChartData } from "../../../Redux/admin_model/DomainCountTicket/chartActions"; // Separate API for chart data
 
 const AdminHome = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const indianTicketsData = [
-    { lat: 19.0760, lng: 72.8777, ticketsCount: 3, popupText: "Mumbai: 3 tickets" },
-    { lat: 28.7041, lng: 77.1025, ticketsCount: 6, popupText: "Delhi: 6 tickets" },
-    { lat: 12.9716, lng: 77.5946, ticketsCount: 4, popupText: "Bangalore: 4 tickets" },
-    { lat: 13.0827, lng: 80.2707, ticketsCount: 7, popupText: "Chennai: 7 tickets" },
-  ];
+  // Get tickets count state from Redux store (from outage slice)
+  const { ticketsCount, loading: ticketsLoading, error: ticketsError } = useSelector(
+    (state) => state.outage
+  );
 
+  // Get chart data state from Redux store (from chart slice)
+  const { chartData, loading: chartLoading, error: chartError } = useSelector(
+    (state) => state.chart
+  );
+
+  // Fetch tickets count when component mounts
+  useEffect(() => {
+    dispatch(fetchTicketsCount());
+  }, [dispatch]);
+
+  // Fetch chart data when component mounts
+  useEffect(() => {
+    dispatch(fetchChartData());
+  }, [dispatch]);
+
+  // Transform ticketsCount data from { "lat_lng": count } to an array of objects:
+  // [{ lat: <number>, lng: <number>, ticketsCount: <number> }, ...]
+  const transformedTicketsData = useMemo(() => {
+    if (!ticketsCount || typeof ticketsCount !== "object") return [];
+    return Object.entries(ticketsCount).map(([key, value]) => {
+      const [lat, lng] = key.split("_");
+      return {
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
+        ticketsCount: value,
+      };
+    });
+  }, [ticketsCount]);
+
+  // Transform chartData from an object to an array:
+  // { category: value } becomes [{ name: category, value: value }, ...]
+  const transformedChartData = useMemo(() => {
+    if (!chartData || typeof chartData !== "object") return [];
+    return Object.entries(chartData).map(([key, value]) => ({
+      name: key,
+      noOfTickets: value,
+    }));
+  }, [chartData]);
+
+  console.log(transformedChartData);
+  
+
+  // Admin action buttons (static)
   const buttons = [
     {
       label: "Add Employee",
       path: "/admins/add",
-      color: "from-green-500 to-green-600 hover:from-green-600 hover:to-green-700",
+      color:
+        "from-green-500 to-green-600 hover:from-green-600 hover:to-green-700",
     },
     {
       label: "Update Employee",
       path: "/admins/update",
-      color: "from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700",
+      color:
+        "from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700",
     },
     {
       label: "Read Employee",
       path: "/admins/read",
-      color: "from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700",
+      color:
+        "from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700",
     },
     {
       label: "Delete Employee",
       path: "/admins/delete",
-      color: "from-red-500 to-red-600 hover:from-red-600 hover:to-red-700",
+      color:
+        "from-red-500 to-red-600 hover:from-red-600 hover:to-red-700",
     },
   ];
 
@@ -52,8 +102,26 @@ const AdminHome = () => {
         ))}
       </div>
       <div>
-        <h1>Indian Outage Map</h1>
-            <OutageMap ticketsData={indianTicketsData} mapCenter={[22.5937, 78.9629]} zoom={5} />
+        <h1 className="text-3xl font-extrabold mb-10 bg-clip-text my-8 mx-32">
+          Number of tickets raised
+        </h1>
+        {ticketsLoading && <p className="text-center">Loading tickets...</p>}
+        {ticketsError && <p className="text-center text-red-600">{ticketsError}</p>}
+        {!ticketsLoading && !ticketsError && (
+          <OutageMap
+            ticketsData={transformedTicketsData}
+            mapCenter={[22.5937, 78.9629]}
+            zoom={5}
+          />
+        )}
+      </div>
+      <div className="mx-32 my-8">
+        <h2 className="text-3xl font-bold mb-4">Tickets Raised As Per the Domain</h2>
+        {chartLoading && <p className="text-center">Loading chart data...</p>}
+        {chartError && <p className="text-center text-red-600">{chartError}</p>}
+        {!chartLoading && !chartError && chartData && (
+          <MyBarChart data={transformedChartData} />
+        )}
       </div>
     </div>
   );

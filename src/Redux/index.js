@@ -13,6 +13,9 @@ import employeeDetailsEditReducer from './employee_module/details/editReducers';
 import managerDetailsReducer from './manager_module/details/detailsReducers';
 import managerDetailsEditReducer from './manager_module/details/editReducers';
 import otpReducer from './signUp/otp/otpReducers';
+import outageReducer from './admin_model/outage/outageReducers';
+import chartReducer from './admin_model/DomainCountTicket/chartReducers';
+
 const rootReducer = {
     tickets: ticketReducer,
     payments: paymentReducer,
@@ -28,6 +31,8 @@ const rootReducer = {
     employeeDetailsEdit: employeeDetailsEditReducer,
     managerDetails: managerDetailsReducer,
     managerDetailsEdit: managerDetailsEditReducer,
+    outage: outageReducer,  // Admin module outage reducer added here
+    chart: chartReducer,  // Admin module chart reducer added here
 };
 
 export default rootReducer;

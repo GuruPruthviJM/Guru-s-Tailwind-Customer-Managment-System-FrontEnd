@@ -42,47 +42,51 @@ const OutageMap = ({
   ticketsData,
   mapCenter = [22.5937, 78.9629],
   zoom = 5,
-  mapSize = { width: "500px", height: "500px" },
 }) => {
   useEffect(() => {
     console.log("OutageMap component rendered");
     console.log("Tickets Data:", ticketsData);
   }, [ticketsData]);
-  const ticketCounts = ticketsData.map(ticket => ticket.ticketsCount);
+
+  // Compute the min and max ticket counts from the data for color scaling
+  const ticketCounts = ticketsData.map((ticket) => ticket.ticketsCount);
   const minTickets = Math.min(...ticketCounts);
   const maxTickets = Math.max(...ticketCounts);
 
   return (
-    <div className="my-6 mx-6">
-      <MapContainer
-        center={mapCenter}
-        zoom={zoom}
-        style={{ width: mapSize.width, height: mapSize.height }}
-        className="rounded-[10px] overflow-hidden shadow-[0_4px_8px_rgba(0,0,0,0.2)]"
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        <MarkerClusterGroup
-          iconCreateFunction={(cluster) =>
-            createClusterIcon(cluster, minTickets, maxTickets)
-          }
+    <div className="my-6 mx-32">
+      {/* Responsive container for the map */}
+      <div className="relative w-full h-96">
+        <MapContainer
+          center={mapCenter}
+          zoom={zoom}
+          style={{ width: "100%", height: "100%" }}
+          className="rounded-[10px] overflow-hidden shadow-[0_4px_8px_rgba(0,0,0,0.2)]"
         >
-          {ticketsData.map((ticket, index) => (
-            <Marker
-              key={index}
-              position={[ticket.lat, ticket.lng]}
-              icon={createCustomIcon(ticket.ticketsCount, minTickets, maxTickets)}
-              ticketCount={ticket.ticketsCount}
-            >
-              <Popup>
-                {ticket.popupText || `Tickets: ${ticket.ticketsCount}`}
-              </Popup>
-            </Marker>
-          ))}
-        </MarkerClusterGroup>
-      </MapContainer>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <MarkerClusterGroup
+            iconCreateFunction={(cluster) =>
+              createClusterIcon(cluster, minTickets, maxTickets)
+            }
+          >
+            {ticketsData.map((ticket, index) => (
+              <Marker
+                key={index}
+                position={[ticket.lat, ticket.lng]}
+                icon={createCustomIcon(ticket.ticketsCount, minTickets, maxTickets)}
+                ticketCount={ticket.ticketsCount}
+              >
+                <Popup>
+                  {ticket.popupText || `Tickets: ${ticket.ticketsCount}`}
+                </Popup>
+              </Marker>
+            ))}
+          </MarkerClusterGroup>
+        </MapContainer>
+      </div>
     </div>
   );
 };
