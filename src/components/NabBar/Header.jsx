@@ -39,7 +39,7 @@ export const Header = () => {
         { name: "About Us", path: "/about" },
         { name: "My Tickets", path: `/customers/tickets` },
         { name: "Notifications", path: "/customers/notification" },
-        { name: "Payment", path: `/customers/payments` },
+        { name: "My Subscriptions", path: `/customers/payments` },
         { name: "Buy Subscription", path: `/customers/purchase` },
       ],
     ],

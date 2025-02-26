@@ -61,25 +61,25 @@ const AdminHome = () => {
   const buttons = [
     {
       label: "Add Employee",
-      path: "/admins/add",
+      path: "/admins/addEmployee",
       color:
         "from-green-500 to-green-600 hover:from-green-600 hover:to-green-700",
     },
     {
       label: "Update Employee",
-      path: "/admins/update",
+      path: "/admins/updateEmployee",
       color:
         "from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700",
     },
     {
       label: "Read Employee",
-      path: "/admins/read",
+      path: "/admins/readEmployee",
       color:
         "from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700",
     },
     {
       label: "Delete Employee",
-      path: "/admins/delete",
+      path: "/admins/deleteEmployee",
       color:
         "from-red-500 to-red-600 hover:from-red-600 hover:to-red-700",
     },
@@ -120,7 +120,7 @@ const AdminHome = () => {
         {chartLoading && <p className="text-center">Loading chart data...</p>}
         {chartError && <p className="text-center text-red-600">{chartError}</p>}
         {!chartLoading && !chartError && chartData && (
-          <MyBarChart data={transformedChartData} />
+          <MyBarChart widthVal={"60%"} data={transformedChartData} attribute={"noOfTickets"} color={"#8884d8"} />
         )}
       </div>
     </div>

@@ -24,6 +24,10 @@ import ManagerList from './Modules/ManagerModule/screens/ManagerDetails';
 import ManagerEditForm from './Modules/ManagerModule/screens/ManagerEditForm';
 import OtpForm from './components/SignIn/OTPForm';
 import AdminHome from './Modules/AdminModule/screen/AdminHomeScreen';
+import TicketRaise from './Modules/CustomerModule/screen/TicketRaise';
+import AddEmployee from './Modules/AdminModule/screen/AddEmployee';
+import UpdateEmployeePanel from './Modules/AdminModule/screen/updateEmployee';
+import DeleteEmployeePanel from './Modules/AdminModule/screen/DeleteEmployee';
 
 export default function App() {
     const router = createBrowserRouter(
@@ -45,6 +49,7 @@ export default function App() {
           <Route path='/customers/profile' element={<CustomerList />} />
           <Route path='/customers/faqs' element={<FAQs />} />
           <Route path='/customers/edits' element={<EditForm />} />
+          <Route path='/customers/raiseTicket' element={<TicketRaise/>} />
           {/* Employee Module */}
           <Route path='/employees' element={<EmployeeHome />} />
           <Route path='/employees/colleague' element={<Collegue />} />
@@ -60,6 +65,9 @@ export default function App() {
           <Route path='/managers/edits' element={<ManagerEditForm />} />
           {/* Admin Module */}
           <Route path='/admins' element={<AdminHome />} />
+          <Route path='/admins/addEmployee' element={<AddEmployee />} />
+          <Route path='/admins/updateEmployee' element={<UpdateEmployeePanel />} />
+          <Route path='/admins/deleteEmployee' element={<DeleteEmployeePanel />} /> 
         </Route>
     )
   );

@@ -15,6 +15,10 @@ import managerDetailsEditReducer from './manager_module/details/editReducers';
 import otpReducer from './signUp/otp/otpReducers';
 import outageReducer from './admin_model/outage/outageReducers';
 import chartReducer from './admin_model/DomainCountTicket/chartReducers';
+import ticketRaiseReducer from './customer_model/Ticket/raiseTicketReducers'
+import addEmployeeReducer from './admin_model/CRUD/addEmployeeReducer';
+import updateEmployeeReducer from './admin_model/CRUD/updateEmployeeReducer';
+import deleteEmployeeReducer from './admin_model/CRUD/deleteEmployeeReducer';
 
 const rootReducer = {
     tickets: ticketReducer,
@@ -31,8 +35,12 @@ const rootReducer = {
     employeeDetailsEdit: employeeDetailsEditReducer,
     managerDetails: managerDetailsReducer,
     managerDetailsEdit: managerDetailsEditReducer,
-    outage: outageReducer,  // Admin module outage reducer added here
-    chart: chartReducer,  // Admin module chart reducer added here
+    outage: outageReducer,
+    chart: chartReducer,  
+    ticketRaise: ticketRaiseReducer, 
+    registerEmployee: addEmployeeReducer,
+    updateEmployee: updateEmployeeReducer,
+    deleteEmployee: deleteEmployeeReducer
 };
 
 export default rootReducer;

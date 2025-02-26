@@ -1,9 +1,9 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const MyBarChart = ({ data }) => {
+const MyBarChart = ({ data, attribute, color, widthVal="90%" }) => {
   return (
-    <ResponsiveContainer width="30%" height={300}>
+    <ResponsiveContainer width={widthVal} height={300}>
       <BarChart
         data={data}
         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -13,7 +13,7 @@ const MyBarChart = ({ data }) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="noOfTickets" fill="#8884d8" />
+        <Bar dataKey={attribute} fill={color} />
       </BarChart>
     </ResponsiveContainer>
   );

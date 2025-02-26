@@ -40,7 +40,7 @@ const ManagerColleagues = () => {
     );
 
   // Update headers: use "managerId" instead of "employeeId"
-  const headers = ["employeeId", "name", "designation", "email"];
+  const headers = ["employeeId", "name", "designation", "email", "avgResolutionTime", "avgResponseTime"];
 
   return (
     <div className="mx-20 container mt-5 px-4 mb-20">

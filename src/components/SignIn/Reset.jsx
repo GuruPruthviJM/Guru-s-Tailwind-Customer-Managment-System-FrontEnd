@@ -73,6 +73,7 @@ function Forget() {
             </option>
             <option value="customers">Customers</option>
             <option value="employees">Employees</option>
+            <option value="managers">Managers</option>
             <option value="admins">Admins</option>
           </select>
         </div>
