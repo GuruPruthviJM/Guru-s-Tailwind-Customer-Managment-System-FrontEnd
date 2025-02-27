@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const updateEmployeeService = async (id, role, formData) => {
   try {
@@ -8,6 +9,9 @@ const updateEmployeeService = async (id, role, formData) => {
     if (!token) {
       throw new Error('User not authenticated');
     }
+    // if(role === 'manager'){
+
+    // }
     const response = await axios.put(
       `https://localhost:3000/api/admins/${user}/${role}/${id}`, ///:id/employees/:empId
       formData,
@@ -18,6 +22,10 @@ const updateEmployeeService = async (id, role, formData) => {
         }
       }
     );
+    toast.success("Employee updated successfully")
+    setTimeout(()=>{
+      window.location.href = "/admins"
+    }, 3000)
     return response.data;
   } catch (error) {
     console.error("Error updating employee:", error);

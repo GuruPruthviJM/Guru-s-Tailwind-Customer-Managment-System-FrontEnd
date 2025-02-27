@@ -8,7 +8,6 @@ const ManagerTicketList = () => {
   const navigate = useNavigate();
   const { id: ticketStatus } = useParams();
   const {user} = useSelector((state)=> state.auth)
-  console.log(ticketStatus);
   
   useEffect(() => {
     if(user)

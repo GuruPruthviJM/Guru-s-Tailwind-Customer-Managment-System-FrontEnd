@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const requestOtpFromAPI = async (data) => {
-  console.log(data);
   try {
     const response = await axios.post(
       "https://localhost:7000/api/customers/validateTheOTP",
@@ -47,7 +46,6 @@ export const requestOtpForreset = async (data) => {
 };
 
 export const verifyOtpFromAPI = async (data) => {
-  console.log("guru", data);
   try {
     const response = await axios.post(
       "https://localhost:7000/api/customers/verifyOTP",

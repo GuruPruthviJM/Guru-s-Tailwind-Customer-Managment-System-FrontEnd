@@ -1,22 +1,39 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  PieChart,
+  Pie,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Cell
+} from 'recharts';
 
-const MyBarChart = ({ data, attribute, color, widthVal="90%" }) => {
+const MyPieChart4 = ({ data, attribute, widthVal = "90%" }) => {
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#d70071', '#af4bd4'];
+
   return (
     <ResponsiveContainer width={widthVal} height={300}>
-      <BarChart
-        data={data}
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+      <PieChart>
+        <Pie
+          data={data}
+          dataKey={attribute}
+          cx="50%"
+          cy="50%"
+          outerRadius={100}
+          label
+        >
+          {data.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={COLORS[index % COLORS.length]} 
+            />
+          ))}
+        </Pie>
         <Tooltip />
-        <Legend />
-        <Bar dataKey={attribute} fill={color} />
-      </BarChart>
+        {/* <Legend /> */}
+      </PieChart>
     </ResponsiveContainer>
   );
 };
 
-export default MyBarChart;
+export default MyPieChart4;

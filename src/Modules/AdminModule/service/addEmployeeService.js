@@ -28,7 +28,6 @@ const addEmployeeService = async (formData) => {
         username: formData.username,
       }
     }
-    console.log(data);
     
     if (!token) {
       throw new Error("User not authenticated");

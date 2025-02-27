@@ -43,10 +43,6 @@ const OutageMap = ({
   mapCenter = [22.5937, 78.9629],
   zoom = 5,
 }) => {
-  useEffect(() => {
-    console.log("OutageMap component rendered");
-    console.log("Tickets Data:", ticketsData);
-  }, [ticketsData]);
 
   // Compute the min and max ticket counts from the data for color scaling
   const ticketCounts = ticketsData.map((ticket) => ticket.ticketsCount);

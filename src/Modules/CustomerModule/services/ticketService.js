@@ -7,6 +7,7 @@ export const fetchTicketsFromAPI = async (id) => {
     if (!token) {
         throw new Error("Please LogIn.");
     }
+    console.log("Guru");
     
     const response = await axios.get(`https://localhost/api/customers/${id}/tickets`, {
         headers: { 
@@ -38,9 +39,14 @@ export const raiseTicketFromAPI = async (ticketData) => {
                 "Content-Type": "application/json",
             },
         });
+        toast.success("Ticket raised successfully.");
+        await delay(2000);
+        window.location.href = "/customers"
         return response.data;
     }catch(error){
-        console.log(error);
+        toast.error("Failed to raise ticket. Please try again.");
+        await delay(2000);
+        window.location.href = "/customers"
         throw new Error("Failed to raise ticket.");
     }
 };

@@ -38,22 +38,20 @@ export const Header = () => {
       [
         { name: "About Us", path: "/about" },
         { name: "My Tickets", path: `/customers/tickets` },
-        { name: "Notifications", path: "/customers/notification" },
         { name: "My Subscriptions", path: `/customers/payments` },
         { name: "Buy Subscription", path: `/customers/purchase` },
       ],
     ],
     [
       "employee",
-      [{ name: "Colleagues", path: `/employees/colleague` }],
+      [{ name: "Repersentatives", path: `/employees/colleague` }],
     ],
     [
       "manager",
-      [{ name: "Colleagues", path: `/managers/colleague` }],
+      [{ name: "Repersentatives", path: `/managers/colleague` }],
     ],
     [
-      "admin",
-      [{ name: "Dashboard", path: `/admins/employee` }],
+      "admin", [],
     ],
     ["guest", []],
   ]);

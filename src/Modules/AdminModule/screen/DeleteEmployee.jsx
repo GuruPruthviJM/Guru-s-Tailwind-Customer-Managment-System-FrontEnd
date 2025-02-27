@@ -26,13 +26,13 @@ const DeleteEmployeePanel = () => {
   // Optional: perform side effects on successful deletion
   useEffect(() => {
       if (employee) {
-        toast.success("Employee deleted successfully.");
+        // toast.success("Employee deleted successfully.");
         setRole("")
         setReason("")
         setEmployeeId("")
-        setTimeout(() =>{
-          navigate("/admins")
-      },3000)
+      //   setTimeout(() =>{
+      //     navigate("/admins")
+      // },3000)
       }
     }, [employee, navigate]);
 

@@ -26,28 +26,32 @@ const UpdateEmployeePanel = () => {
     let updateData = {};
     if (name.trim() !== "") updateData.name = name;
     if (email.trim() !== "") updateData.email = email;
-    if (phoneNo.trim() !== "") updateData.phoneNo = phoneNo;
+    if (phoneNo.trim() !== ""){
+      if(role==="employee"){
+        updateData.phoneNo = phoneNo;
+      } else{
+        updateData.phone_Number = phoneNo;
+      }
+    }
 
     if (Object.keys(updateData).length === 0) {
       toast.error("Please provide at least one of Name, Email or Phone Number.");
       return;
     }
-    console.log(updateData);
     
-
     dispatch(fetchUpdateEmployeeStatus(employeeId, role, updateData));
   };
 
   useEffect(() => {
     if (employee) {
-      toast.success("Employee updated successfully.");
+      // toast.success("Employee updated successfully.");
       setEmployeeId("");
       setName("");
       setEmail("");
       setPhoneNo("");
-      setTimeout(() =>{
-        navigate("/admins")
-    },3000)
+    //   setTimeout(() =>{
+    //     navigate("/admins")
+    // },3000)
     }
   }, [employee, navigate]);
 

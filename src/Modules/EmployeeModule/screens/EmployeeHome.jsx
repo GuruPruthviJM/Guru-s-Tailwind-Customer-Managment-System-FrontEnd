@@ -26,17 +26,23 @@ const TicketParentComponent = () => {
 
   if (loading) return <p className="text-center mt-5">Loading...</p>;
   if (error) return <p className="text-center mt-5 text-red-600">{error}</p>;
-  if (!tickets || tickets.length === 0)
-    return <p className="text-center mt-5">No tickets available</p>;
 
-  // Sort tickets by createdAt in descending order (newest first)
-  const sortedTickets = [...tickets].sort(
+  // Filter to include only tickets with "open" status
+  const openTickets = tickets.filter(
+    (ticket) => ticket //.ticketStatus.toLowerCase() === "open"
+  );
+
+  // Sort the open tickets by createdAt in descending order (newest first)
+  const sortedTickets = [...openTickets].sort(
     (a, b) => parseDate(b.createdAt) - parseDate(a.createdAt)
   );
 
+  if (!sortedTickets || sortedTickets.length === 0)
+    return <p className="text-center mt-5 flex justify-center">No tickets have been assigned :)</p>;
+
   // Called when a card is clicked
   const handleCardClick = (ticketId) => {
-    navigate(`/employees/ticket/${ticketId}`);
+    navigate(`/employees/tickets/${ticketId}`);
   };
 
   return (
@@ -46,8 +52,7 @@ const TicketParentComponent = () => {
       </h2>
       <div className="flex mx-24 flex-wrap justify-center">
         {sortedTickets.map((ticket, index) => (
-          // Pass down an onClick prop to the Cards component
-          <Cards key={index} ticket={ticket} onCardClick={handleCardClick} />
+          <Cards key={ticket.ticketId || index} ticket={ticket} onCardClick={handleCardClick} />
         ))}
       </div>
     </div>

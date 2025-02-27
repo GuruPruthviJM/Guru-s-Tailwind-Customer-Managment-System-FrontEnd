@@ -53,19 +53,19 @@ const TicketRaise = () => {
     // Prepare ticket data. Adjust field names as required by your API.
     const ticketData = {
       department: selectedService,
-      description: ticketDescription
+      ticketDescription: ticketDescription
     };
     dispatch(raiseTicket(ticketData));
   };
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
-    if (ticket) {
-      toast.success("Ticket raised successfully!");
-    }
-  }, [error, ticket]);
+  // useEffect(() => {
+  //   if (error) {
+  //     toast.error(error);
+  //   }
+  //   if (ticket) {
+  //     toast.success("Ticket raised successfully!");
+  //   }
+  // }, [error, ticket]);
 
   return (
     <div className="max-w-[30%] mx-auto my-10">

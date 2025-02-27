@@ -19,7 +19,7 @@ const deleteEmployeeService = async (employeeId, role, reason) => {
     toast.success("Employee deleted successfully.");
     setTimeout(()=>{
       window.location.href="/admins";
-    })
+    }, 3000)
     return response.data;
   } catch (error) {
     if(error.statusCode === 401) {

@@ -80,7 +80,6 @@ export const otpRequest = () => ({
     return async (dispatch) => {  
       dispatch(otpVerifyRequest());
       try {
-        console.log(email, otp);
         
         const data = await verifyOtpFromAPI({email, otp});
         dispatch(otpVerifySuccess(data));

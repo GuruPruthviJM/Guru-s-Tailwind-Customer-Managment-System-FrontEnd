@@ -3,7 +3,6 @@ import axios from 'axios';
 const getTicketStatus = async (id) => {
   try {
     const token = JSON.parse(sessionStorage.getItem('user'))?.token
-    console.log(token);
     
     if (!token) {
       throw new Error('User not authenticated');

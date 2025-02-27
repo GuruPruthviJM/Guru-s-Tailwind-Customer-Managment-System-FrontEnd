@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchCollegues } from "../../../Redux/employee_module/collegue/collegueActions";
 import { useNavigate } from "react-router-dom";
 
@@ -7,12 +7,11 @@ const Collegue = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { collegues, loading, error } = useSelector((state) => state.collegue);
-  const {user} = useSelector((state) => state.auth);
-
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (user?.user?.userName) {
-          dispatch(fetchCollegues(user.user.userName));
+      dispatch(fetchCollegues(user.user.userName));
     }
   }, [dispatch, user]);
 
@@ -22,24 +21,19 @@ const Collegue = () => {
 
   if (loading)
     return (
-      <p className="text-center mt-5 text-xl">
-        Loading...
-      </p>
+      <p className="text-center mt-5 text-xl">Loading...</p>
     );
   if (error)
     return (
-      <p className="text-center mt-5 text-red-600 text-xl">
-        {error}
-      </p>
+      <p className="text-center mt-5 text-red-600 text-xl">{error}</p>
     );
   if (!collegues?.length)
     return (
-      <p className="text-center mt-5 text-xl text-gray-700">
-        No colleagues found.
-      </p>
+      <p className="text-center mt-5 text-xl text-gray-700">No colleagues found.</p>
     );
 
   const headers = ["employeeId", "name", "designation", "email"];
+  const loggedInUserName = user?.user?.userName;
 
   return (
     <div className="container mx-20 mt-5 px-4 mb-20">
@@ -63,26 +57,38 @@ const Collegue = () => {
           <tbody>
             {collegues
               .sort((a, b) => (a.type === "manager" ? -1 : 1))
-              .map((collegue, index) => (
-                <tr
-                  key={index}
-                  className={`cursor-pointer transition duration-300 group ${
-                    collegue.type === "manager"
-                      ? "bg-green-500 font-bold"
-                      : "odd:bg-[#f2f2f2] even:bg-white hover:bg-[#438e9c]"
-                  }`}
-                  onClick={() => handleClick(collegue[headers[0]])}
-                >
-                  {headers.map((header, idx) => (
-                    <td
-                      key={idx}
-                      className="py-3 px-6 border-t border-gray-200 text-center group-hover:bg-black group-hover:text-white"
-                    >
-                      {collegue[header] || "N/A"}
-                    </td>
-                  ))}
-                </tr>
-              ))}
+              .map((collegue, index) => {
+                const isLoggedInUser =
+                  collegue.employeeId === loggedInUserName;
+                return (
+                  <tr
+                    key={index}
+                    className={`cursor-pointer transition duration-300 group ${
+                      isLoggedInUser
+                        ? "bg-gray-200 font-bold"
+                        : collegue.type === "manager"
+                        ? "bg-green-500 font-bold"
+                        : "odd:bg-[#f2f2f2] even:bg-white hover:bg-[#438e9c]"
+                    }`}
+                    onClick={() => handleClick(collegue.employeeId)}
+                  >
+                    {headers.map((header, idx) => {
+                      let cellValue = collegue[header];
+                      if (header === "name" && isLoggedInUser) {
+                        cellValue = "You";
+                      }
+                      return (
+                        <td
+                          key={idx}
+                          className="py-3 px-6 border-t border-gray-200 group-hover:bg-black group-hover:text-white"
+                        >
+                          {cellValue || "N/A"}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>

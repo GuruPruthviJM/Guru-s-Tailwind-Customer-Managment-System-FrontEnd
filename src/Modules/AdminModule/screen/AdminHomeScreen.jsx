@@ -54,9 +54,6 @@ const AdminHome = () => {
     }));
   }, [chartData]);
 
-  console.log(transformedChartData);
-  
-
   // Admin action buttons (static)
   const buttons = [
     {

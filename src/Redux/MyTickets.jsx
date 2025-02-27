@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTickets } from "../../../Redux/customer_model/Ticket/ticketActions";
+import { fetchTickets } from "./employee_module/Tickets/ticketActions";
 import { useNavigate } from "react-router-dom";
-import SearchBar from "../../../components/SearchBar"; // Import the SearchBar component
+import SearchBar from "../components/SearchBar"; // Import the SearchBar component
 
 const TicketList = () => {
   const dispatch = useDispatch();

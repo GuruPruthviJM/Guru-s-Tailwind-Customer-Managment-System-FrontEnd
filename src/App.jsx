@@ -28,6 +28,8 @@ import TicketRaise from './Modules/CustomerModule/screen/TicketRaise';
 import AddEmployee from './Modules/AdminModule/screen/AddEmployee';
 import UpdateEmployeePanel from './Modules/AdminModule/screen/updateEmployee';
 import DeleteEmployeePanel from './Modules/AdminModule/screen/DeleteEmployee';
+import TicketDetails from './Modules/CustomerModule/screen/TicketDetails';
+import EmployeeTicketDetails from './Modules/EmployeeModule/screens/TicketDetails';
 
 export default function App() {
     const router = createBrowserRouter(
@@ -50,12 +52,14 @@ export default function App() {
           <Route path='/customers/faqs' element={<FAQs />} />
           <Route path='/customers/edits' element={<EditForm />} />
           <Route path='/customers/raiseTicket' element={<TicketRaise/>} />
+          <Route path='/customers/tickets/:id' element={<TicketDetails />} />
           {/* Employee Module */}
           <Route path='/employees' element={<EmployeeHome />} />
           <Route path='/employees/colleague' element={<Collegue />} />
           <Route path='/employees/profile' element={<EmployeeList />} />
           <Route path='/employees/profile/:id' element={<EmployeeList />} />
           <Route path='/employees/edits' element={<EmployeeEditForm />} />
+          <Route path='/employees/tickets/:id' element={<EmployeeTicketDetails />} />
           {/* Manager Module */}
           <Route path='/managers' element={<StatusTickets />} />
           <Route path='/managers/tickets/:id' element={<ManagerTicketList />} />
