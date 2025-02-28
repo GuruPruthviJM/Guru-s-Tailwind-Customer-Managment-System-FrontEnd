@@ -19,6 +19,7 @@ import ticketRaiseReducer from './customer_model/Ticket/raiseTicketReducers'
 import addEmployeeReducer from './admin_model/CRUD/addEmployeeReducer';
 import updateEmployeeReducer from './admin_model/CRUD/updateEmployeeReducer';
 import deleteEmployeeReducer from './admin_model/CRUD/deleteEmployeeReducer';
+import  employeeReducer from './admin_model/CRUD/readEmployeeReducer';
 
 const rootReducer = {
     tickets: ticketReducer,
@@ -40,7 +41,8 @@ const rootReducer = {
     ticketRaise: ticketRaiseReducer, 
     registerEmployee: addEmployeeReducer,
     updateEmployee: updateEmployeeReducer,
-    deleteEmployee: deleteEmployeeReducer
+    deleteEmployee: deleteEmployeeReducer,
+    employees: employeeReducer,
 };
 
 export default rootReducer;
