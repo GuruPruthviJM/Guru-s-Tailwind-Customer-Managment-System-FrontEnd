@@ -8,7 +8,6 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, user } = useSelector((state) => state.signUp);
-
   const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");

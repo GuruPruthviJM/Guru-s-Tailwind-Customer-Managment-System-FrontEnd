@@ -21,23 +21,17 @@ const StatusTickets = () => {
   const { chartData, loading: chartLoading, error: chartError } = useSelector(
     (state) => state.chart
   );
-
-  // Get managerID from sessionStorage
   const managerID = JSON.parse(sessionStorage.getItem("user"))?.user?.userName;
-
   useEffect(() => {
     dispatch(fetchTicketStats(managerID));
   }, [dispatch, managerID]);
-
   useEffect(() => {
     dispatch(fetchTicketsCount());
   }, [dispatch]);
-
   useEffect(() => {
     dispatch(fetchChartData());
   }, [dispatch]);
 
-  // Transform ticketsCount data from { "lat_lng": count } to an array of objects
   const transformedTicketsData = useMemo(() => {
     if (!ticketsCount || typeof ticketsCount !== "object") return [];
     return Object.entries(ticketsCount).map(([key, value]) => {
@@ -50,7 +44,6 @@ const StatusTickets = () => {
     });
   }, [ticketsCount]);
 
-  // Transform chartData from an object to an array
   const transformedChartData = useMemo(() => {
     if (!chartData || typeof chartData !== "object") return [];
     return Object.entries(chartData).map(([key, value]) => ({
@@ -59,7 +52,7 @@ const StatusTickets = () => {
     }));
   }, [chartData]);
 
-  // Define ticket stats with Tailwind classes for background colors
+
   const ticketStats = [
     {
       title: "Open Tickets",

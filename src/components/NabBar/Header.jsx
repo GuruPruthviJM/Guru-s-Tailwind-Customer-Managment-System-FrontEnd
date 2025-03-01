@@ -44,7 +44,10 @@ export const Header = () => {
     ],
     [
       "employee",
-      [{ name: "Repersentatives", path: `/employees/colleague` }],
+      [
+        { name: "Repersentatives", path: `/employees/colleague` },
+        { name: "stats", path: `/employees/stats` },
+      ],
     ],
     [
       "manager",

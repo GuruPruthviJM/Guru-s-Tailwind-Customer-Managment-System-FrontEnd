@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const fetchChartDataFromAPI = async () => {
-  // Replace with your actual chart data endpoint and safe port
   const session = JSON.parse(sessionStorage.getItem('user'));
   try{
         if (!session ||!session.token) {

@@ -28,9 +28,7 @@ const TicketParentComponent = () => {
   if (error) return <p className="text-center mt-5 text-red-600">{error}</p>;
 
   // Filter to include only tickets with "open" status
-  const openTickets = tickets.filter(
-    (ticket) => ticket //.ticketStatus.toLowerCase() === "open"
-  );
+  const openTickets = tickets
 
   // Sort the open tickets by createdAt in descending order (newest first)
   const sortedTickets = [...openTickets].sort(
@@ -51,7 +49,7 @@ const TicketParentComponent = () => {
         Tickets Assigned
       </h2>
       <div className="flex mx-24 flex-wrap justify-center">
-        {sortedTickets.map((ticket, index) => (
+        {sortedTickets&&sortedTickets.map((ticket, index) => (
           <Cards key={ticket.ticketId || index} ticket={ticket} onCardClick={handleCardClick} />
         ))}
       </div>

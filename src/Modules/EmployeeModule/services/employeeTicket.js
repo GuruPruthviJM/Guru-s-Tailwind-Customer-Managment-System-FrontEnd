@@ -78,6 +78,7 @@ export const updateSpecificTicketFromAPI = async (id, updatedData) => {
         },
       }
     );
+    console.log("Guru Pruthvi");
     toast.success("Ticket updated successfully")
     setTimeout(()=>{
       window.location.href="/employees" 

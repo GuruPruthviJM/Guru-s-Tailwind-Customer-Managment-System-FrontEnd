@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Dropdown = ({ selectedRole, setSelectedRole }) => {
-  const roles = ["Customers", "Employees", "Managers", "Admins", "Authorizers"];
+  const roles = ["Customers", "Employees", "Managers", "Admins"];
   return (
     <div className="mb-6">
       <label className="block text-lg font-bold text-gray-700 mb-1">
@@ -108,10 +108,10 @@ const LoginForm = () => {
               <form onSubmit={handleSubmit}>
                 <div className="mb-5">
                   <label
-                    htmlFor="username"
+                    htmlFor="email"
                     className="block text-lg font-bold text-gray-700 mb-1"
                   >
-                    Username
+                    Email
                   </label>
                   <input
                     type="text"
@@ -119,7 +119,7 @@ const LoginForm = () => {
                     className="mt-1 block w-full border border-gray-300 rounded-md p-3 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your username"
+                    placeholder="Enter your Email"
                     required
                   />
                 </div>
