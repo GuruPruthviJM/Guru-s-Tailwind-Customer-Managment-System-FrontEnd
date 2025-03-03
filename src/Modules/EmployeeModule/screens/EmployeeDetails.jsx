@@ -14,12 +14,17 @@ const EmployeeList = () => {
   const { user } = useSelector((state) => state.auth);
 
   let {id} = useParams()
+  let display = false;
 
   // Fetch customer details when the component mounts
   useEffect(() => {
+    
     if(id){
+      display=false;
       dispatch(fetchEmployeeDetails(id));
     }else if (user?.user?.userName) {
+      // console.log(id);
+      display=true;
       dispatch(fetchEmployeeDetails(user.user.userName));
     }
   }, [dispatch, user]);
@@ -56,7 +61,7 @@ const EmployeeList = () => {
       {error && <p className="text-center text-red-600">{error}</p>}
 
       {employeeDetails && (
-        <div className="overflow-x-auto shadow-lg rounded-lg">
+        <div className="overflow-x-auto shadow-lg rounded-lg my-4">
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-[#00acc1]">
@@ -88,6 +93,7 @@ const EmployeeList = () => {
       )}
 
       {/* Button container */}
+      {display && (
       <div className="flex justify-between items-center gap-4 mt-8">
         <button
           onClick={handleEdit}
@@ -102,6 +108,7 @@ const EmployeeList = () => {
           Logout
         </button>
       </div>
+      )}
     </div>
   );
 };
