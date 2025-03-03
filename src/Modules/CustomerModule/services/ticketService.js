@@ -9,7 +9,7 @@ export const fetchTicketsFromAPI = async (id) => {
     }
     console.log("Guru");
     
-    const response = await axios.get(`http://localhost:8080/api/customers/${id}/tickets`, {
+    const response = await axios.get(`http://54.166.126.188:8080/api/customers/${id}/tickets`, {
         headers: { 
             Authorization: `Bearer ${token}`, 
             "Content-Type": "application/json"
@@ -33,7 +33,7 @@ export const raiseTicketFromAPI = async (ticketData) => {
         throw new Error("Please LogIn.");
     }
     try{
-        const response = await axios.post(`http://localhost:8080/api/customers/${userName}/tickets`, ticketData, {
+        const response = await axios.post(`http://54.166.126.188:8080/api/customers/${userName}/tickets`, ticketData, {
             headers: {
                 Authorization: `Bearer ${token}`,  // Bearer is a common token type
                 "Content-Type": "application/json",

@@ -16,7 +16,7 @@ export const updateCustomerDetailsFromAPI = async (id, customerData) => {
   
   try {
     const response = await axios.put(
-      `http://localhost:8080/api/customers/${id}`,
+      `http://54.166.126.188:8080/api/customers/${id}`,
       customerData,
       {
         headers: {

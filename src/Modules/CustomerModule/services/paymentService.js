@@ -8,7 +8,7 @@ export const fetchPaymentsFromAPI = async (id) => {
         throw new Error("User is not authenticated. Please log in.");
     }
 
-    const response = await axios.get(`http://localhost:8080/api/customers/${id}/payments`, {
+    const response = await axios.get(`http://54.166.126.188:8080/api/customers/${id}/payments`, {
         headers: { 
             Authorization: `Bearer ${token}`, 
             'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export const createPaymentInAPI = async (id, paymentData) => {
         throw new Error("User is not authenticated. Please log in.");
     }
 
-    const response = await axios.post(`http://localhost:8080/api/customers/${id}/payments`,
+    const response = await axios.post(`http://54.166.126.188:8080/api/customers/${id}/payments`,
         paymentData, 
         {
         headers: {

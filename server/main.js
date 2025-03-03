@@ -10,6 +10,6 @@ app.get('*', (req, res) => {
 })
  
 app.listen(80, () => {
-    console.log('listening on port http://localhost:80')
+    console.log('listening on port http://54.166.126.188:80')
 })
  

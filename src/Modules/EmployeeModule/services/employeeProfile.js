@@ -9,7 +9,7 @@ export const fetchEmployeeDetailsFromAPI = async (id) => {
     throw new Error("User is not authenticated. Please log in.");
   }
   try {
-    const response = await axios.get(`http://localhost:8000/api/employees/${id}`, {
+    const response = await axios.get(`http://54.166.126.188:8000/api/employees/${id}`, {
       headers: { 
         Authorization: `Bearer ${token}`, 
         'Content-Type': 'application/json'
