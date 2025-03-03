@@ -6,7 +6,7 @@ export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 export const requestOtpFromAPI = async (data) => {
   try {
     const response = await axios.post(
-      "http://54.166.126.188:7000/api/customers/validateTheOTP",
+      "http://18.209.26.169:7000/api/customers/validateTheOTP",
       data,
       {
         headers: {
@@ -28,7 +28,7 @@ export const requestOtpFromAPI = async (data) => {
 export const requestOtpForreset = async (data) => {
   try {
     const response = await axios.post(
-      `http://54.166.126.188:7000/api/${data.roles}/generateOTP`,
+      `http://18.209.26.169:7000/api/${data.roles}/generateOTP`,
       data,
       {
         headers: {
@@ -48,7 +48,7 @@ export const requestOtpForreset = async (data) => {
 export const verifyOtpFromAPI = async (data) => {
   try {
     const response = await axios.post(
-      "http://54.166.126.188:7000/api/customers/verifyOTP",
+      "http://18.209.26.169:7000/api/customers/verifyOTP",
       data,
       {
         headers: {

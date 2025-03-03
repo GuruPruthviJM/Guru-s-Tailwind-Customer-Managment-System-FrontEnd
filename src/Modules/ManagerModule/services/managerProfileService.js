@@ -13,8 +13,8 @@ export const fetchManagerDetailsFromAPI = async (id) => {
   // Use the appropriate URL based on whether the session's userName matches the provided id
   const url =
     sessionObject.user.userName !== id
-      ? `http://54.166.126.188:5000/api/managers/${sessionObject.user.userName}/collegue/${id}`
-      : `http://54.166.126.188:5000/api/managers/${id}`;
+      ? `http://18.209.26.169:5000/api/managers/${sessionObject.user.userName}/collegue/${id}`
+      : `http://18.209.26.169:5000/api/managers/${id}`;
 
   try {
     const response = await axios.get(url, {

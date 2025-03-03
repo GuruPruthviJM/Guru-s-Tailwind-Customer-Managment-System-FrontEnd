@@ -10,7 +10,7 @@ export const fetchCustomerDetailsFromAPI = async (id) => {
   }
   
   try {
-    const response = await axios.get(`http://54.166.126.188:8080/api/customers/${id}`, {
+    const response = await axios.get(`http://18.209.26.169:8080/api/customers/${id}`, {
       headers: { 
         Authorization: `Bearer ${token}`, 
         'Content-Type': 'application/json'

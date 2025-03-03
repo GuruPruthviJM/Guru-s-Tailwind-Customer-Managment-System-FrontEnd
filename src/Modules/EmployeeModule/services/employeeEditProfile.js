@@ -16,7 +16,7 @@ export const updateEmployeeDetailsFromAPI = async (id, employeeData) => {
 
   try {
     const response = await axios.put(
-      `http://54.166.126.188:8000/api/employees/${id}`,
+      `http://18.209.26.169:8000/api/employees/${id}`,
       employeeData,
       {
         headers: {

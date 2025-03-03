@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 export const updateDetailsFromAPI = async (roles, creditials) => {
   try {
     const response = await axios.put(
-      `http://54.166.126.188:7000/api/${roles}/guru-pruthvi/password`,
+      `http://18.209.26.169:7000/api/${roles}/guru-pruthvi/password`,
       creditials,
       {
         headers: {

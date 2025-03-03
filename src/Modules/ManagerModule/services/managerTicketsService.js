@@ -8,7 +8,7 @@ export const fetchTicketsFromAPI = async (id, ticketStatus) => {
     if(ticketStatus==="in-progress")
         ticketStatus = "PENDING";
     
-    const response = await axios.get(`http://54.166.126.188:5000/api/managers/${id}/ticketStatus/${ticketStatus}`, {
+    const response = await axios.get(`http://18.209.26.169:5000/api/managers/${id}/ticketStatus/${ticketStatus}`, {
         headers: { 
             Authorization: `Bearer ${token}`, 
             "Content-Type": "application/json"

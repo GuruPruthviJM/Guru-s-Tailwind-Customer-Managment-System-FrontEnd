@@ -15,7 +15,7 @@ export const updateManagerDetailsFromAPI = async (id, managerData) => {
   }
   try {
     const response = await axios.put(
-      `http://54.166.126.188:5000/api/managers/${id}`,
+      `http://18.209.26.169:5000/api/managers/${id}`,
        managerData,
       {
         headers: {
