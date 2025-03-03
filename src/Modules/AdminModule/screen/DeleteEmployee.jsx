@@ -10,7 +10,6 @@ const DeleteEmployeePanel = () => {
 
   // Local state for form inputs
   const [employeeId, setEmployeeId] = useState("");
-  const [reason, setReason] = useState("");
   const [role, setRole] = useState("");
 
   // Redux state for deletion
@@ -28,10 +27,6 @@ const DeleteEmployeePanel = () => {
       toast.error("Please enter a valid Employee ID");
       return false;
     }
-    if (!reason.trim()) {
-      toast.error("Please provide a reason for deletion");
-      return false;
-    }
     return true;
   };
 
@@ -39,7 +34,7 @@ const DeleteEmployeePanel = () => {
     event.preventDefault();
     if (!validateForm()) return; // Stop submission if validation fails
 
-    dispatch(fetchDeleteEmployeeStatus(employeeId, role, reason));
+    dispatch(fetchDeleteEmployeeStatus(employeeId, role));
   };
 
   // Reset form after successful deletion
@@ -47,7 +42,6 @@ const DeleteEmployeePanel = () => {
     if (employee) {
       // Optionally, you can show a success toast here if needed.
       setRole("");
-      setReason("");
       setEmployeeId("");
       // Optionally navigate after deletion
       // setTimeout(() => {
@@ -94,7 +88,7 @@ const DeleteEmployeePanel = () => {
             />
           </div>
           {/* Reason for Deletion */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block font-bold text-lg mb-1">
               Reason for Deletion:
             </label>
@@ -104,7 +98,7 @@ const DeleteEmployeePanel = () => {
               onChange={(e) => setReason(e.target.value)}
               required
             />
-          </div>
+          </div> */}
           {loading ? (
             <div className="text-center text-blue-500">Deleting...</div>
           ) : (

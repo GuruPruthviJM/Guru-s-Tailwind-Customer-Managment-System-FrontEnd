@@ -93,8 +93,7 @@ const UpdateEmployeePanel = () => {
 
   useEffect(() => {
     if (employee) {
-      alert("Employee updated successfully.");
-      // Reset the form fields after successful update
+
       setEmployeeId("");
       setName("");
       setEmail("");

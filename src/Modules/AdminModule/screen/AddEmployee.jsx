@@ -85,10 +85,10 @@ const AddEmployee = () => {
     }
     // Validate Pincode
     const pincodeValidation = validatePincode(formData.pincode);
-    if (!pincodeValidation.isValid) {
-      toast.error(pincodeValidation.message);
-      return false;
-    }
+    // if (!pincodeValidation.isValid) {
+    //   toast.error(pincodeValidation.message);
+    //   return false;
+    // }
     // Role-specific fields
     if (formData.role === "employees") {
       if (!formData.managerId.trim()) {
@@ -127,8 +127,7 @@ const AddEmployee = () => {
 
   useEffect(() => {
     if (employee) {
-      alert("Employee Registered Successfully!");
-      // Reset the form after successful registration
+      toast.success("Employee Registered Successfully!");
       setFormData({
         name: "",
         username: "",
@@ -141,8 +140,9 @@ const AddEmployee = () => {
         password: "",
         pincode: "",
       });
-      // Optionally navigate to another page
-      // navigate("/employee/dashboard");
+      setTimeout(()=>{
+        navigate("/admins")
+      }, 2000);
     }
   }, [employee, navigate]);
 
