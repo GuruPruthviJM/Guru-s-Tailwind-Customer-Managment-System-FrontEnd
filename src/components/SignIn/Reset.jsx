@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { requestOtpForReset, verifyOtp } from "../../Redux/signUp/otp/otpActions"; // Adjust path as needed
-import {updateDetails} from "../../Redux/signUp/resetPassword/resetActions"
+import { updateDetails } from "../../Redux/signUp/resetPassword/resetActions";
 import { useNavigate } from "react-router-dom";
+import { validateEmail, validatePassword, validateRole, validateOtp } from "../validation";
 
 function Forget() {
   const [role, setRole] = useState("");
@@ -20,7 +21,7 @@ function Forget() {
   // Get OTP state from Redux (e.g., requestData, requestError, verified, verifyError, resetSuccess, resetError)
   const otpState = useSelector((state) => state.otp);
 
-  // When stage 0 (request OTP) is completed
+  // Stage 0: Request OTP
   useEffect(() => {
     if (otpState.requestData) {
       toast.success("OTP has been sent to your email.");
@@ -31,7 +32,7 @@ function Forget() {
     }
   }, [otpState.requestData, otpState.requestError]);
 
-  // When stage 1 (OTP verification) is completed
+  // Stage 1: OTP verification
   useEffect(() => {
     if (otpState.verified) {
       toast.success("OTP verified successfully!");
@@ -43,7 +44,7 @@ function Forget() {
     }
   }, [otpState.verified, otpState.verifyError, dispatch]);
 
-  // When password reset is successful (optional: you could handle this in another useEffect)
+  // Stage 2: Password reset
   useEffect(() => {
     if (otpState.resetSuccess) {
       toast.success(`Password reset successful for ${emailID} (${role})`);
@@ -145,29 +146,37 @@ function Forget() {
   // Define actions for each stage using Redux for OTP generation/verification and password reset
   const actions = [
     () => {
-      // Stage 0: Request OTP via Redux
-      if (!role) {
-        toast.error("Please select a role.");
+      // Stage 0: Validate role and email, then request OTP via Redux
+      const roleValidation = validateRole(role);
+      if (!roleValidation.isValid) {
+        toast.error(roleValidation.message);
         return;
       }
-      if (!emailID) {
-        toast.error("Please enter your email.");
+      const emailValidation = validateEmail(emailID);
+      if (!emailValidation.isValid) {
+        toast.error(emailValidation.message);
         return;
       }
       dispatch(requestOtpForReset({ roles: role, email: emailID }));
     },
     () => {
-      // Stage 1: Verify OTP via Redux
-      if (!otp.trim()) {
-        toast.error("Please enter the OTP");
+      // Stage 1: Validate OTP via Redux
+      const otpValidation = validateOtp(otp);
+      if (!otpValidation.isValid) {
+        toast.error(otpValidation.message);
         return;
       }
       dispatch(verifyOtp(emailID, otp));
     },
     () => {
-      // Stage 2: Reset password via Redux action
+      // Stage 2: Validate new password and confirm password, then reset password via Redux
+      const passwordValidation = validatePassword(newPassword);
+      if (!passwordValidation.isValid) {
+        toast.error(passwordValidation.message);
+        return;
+      }
       if (newPassword !== confirmNewPassword) {
-        toast.error("Passwords do not match!");
+        toast.error("Passwords do not match.");
         return;
       }
       dispatch(updateDetails(role, { email: emailID, password: newPassword }));

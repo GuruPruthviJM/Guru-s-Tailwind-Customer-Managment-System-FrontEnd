@@ -10,7 +10,6 @@ export const loginUser = (username, password, role) => async (dispatch) => {
 
   try {
     const userData = await loginService(username, password, role);
-    
     if (userData) {
       sessionStorage.setItem("user", JSON.stringify(userData));
       dispatch(loginSuccess(userData));
@@ -19,7 +18,16 @@ export const loginUser = (username, password, role) => async (dispatch) => {
     }
   } catch (error) {
     console.error("Login error:", error); // Debugging
-    const errorMessage = error?.response?.data?.message || error?.message || "Login failed";
+
+    const status = error?.response?.status;
+    const errorMapping = {
+      404: "User is not registered",
+      500: "CRT Error: A critical error occurred in the service layer. Please try again later or contact support if the issue persists."
+    };
+
+    // Use the mapping if available; otherwise fallback to error response message or a generic message.
+    const errorMessage = errorMapping[status] ?? (error?.response?.data?.message || error?.message || "Login failed");
+
     dispatch(loginFailure(errorMessage));
   }
 };

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpUser } from "../../Redux/signUp/signIn/signInActions"; // adjust path as needed
-import { verifyOtp, resetOtp } from "../../Redux/signUp/otp/otpActions"; // adjust path as needed
+import { signUpUser } from "../../Redux/signUp/signIn/signInActions";
+import { verifyOtp, resetOtp } from "../../Redux/signUp/otp/otpActions";
+import { validateOtp } from "../validation";
 
 const OtpForm = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const OtpForm = () => {
   const userData = location.state?.userData;
   const [otp, setOtp] = useState("");
 
-  const { loading, error, user } = useSelector((state) => state.signUp);
+  const { loading, error } = useSelector((state) => state.signUp);
   const { verified } = useSelector((state) => state.otp);
 
   useEffect(() => {
@@ -27,17 +28,17 @@ const OtpForm = () => {
       toast.success("Email verified successfully!");
       dispatch(signUpUser(userData));
       navigate("/login");
-      dispatch(resetOtp()); 
+      dispatch(resetOtp());
     }
   }, [verified, dispatch, navigate, userData]);
 
   const handleOtpSubmit = (event) => {
     event.preventDefault();
-    if (!otp.trim()) {
-      toast.error("Please enter the OTP");
+    const otpValidation = validateOtp(otp);
+    if (!otpValidation.isValid) {
+      toast.error(otpValidation.message, { position: "top-right" });
       return;
     }
-    // Dispatch verifyOtp with necessary payload (e.g., email and otp)
     dispatch(verifyOtp(userData.email, otp));
   };
 
@@ -64,7 +65,7 @@ const OtpForm = () => {
           {loading ? "Verifying..." : "Verify OTP & Sign Up"}
         </button>
       </form>
-      <ToastContainer />
+      <ToastContainer position="top-right" />
     </div>
   );
 };

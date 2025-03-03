@@ -9,7 +9,7 @@ const deleteEmployeeService = async (employeeId, role, reason) => {
     if (!token) {
       throw new Error('User not authenticated');
     }
-    const response = await axios.delete(`https://localhost:3000/api/admins/${username}/${role}/${employeeId}`, {
+    const response = await axios.delete(`http://localhost:3000/api/admins/${username}/${role}/${employeeId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json"

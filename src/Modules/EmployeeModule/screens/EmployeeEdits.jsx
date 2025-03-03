@@ -4,6 +4,11 @@ import { updateEmployeeDetails, resetUpdateEmployeeDetails } from "../../../Redu
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import {
+  validateFullName,
+  validateEmail,
+  validatePhoneNumber,
+} from "../../../components/validation";
 
 const EmployeeEditForm = () => {
   const dispatch = useDispatch();
@@ -29,24 +34,45 @@ const EmployeeEditForm = () => {
 
   useEffect(() => {
     if (updateSuccess) {
-      toast.success("Employees details updated", { position: "top-right" });
+      toast.success("Employee details updated", { position: "top-right" });
       navigate("/employees");
       dispatch(resetUpdateEmployeeDetails());
     }
-  }, [updateSuccess, dispatch]);
+  }, [updateSuccess, dispatch, navigate]);
+
+  const validateForm = () => {
+    const fullNameValidation = validateFullName(fullName);
+    if (!fullNameValidation.isValid) {
+      toast.error(fullNameValidation.message);
+      return false;
+    }
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      toast.error(emailValidation.message);
+      return false;
+    }
+    const phoneValidation = validatePhoneNumber(phoneNumber);
+    if (!phoneValidation.isValid) {
+      toast.error(phoneValidation.message);
+      return false;
+    }
+    if (!agreeTerms) {
+      toast.error("Please agree to the terms and conditions");
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!agreeTerms) {
-      alert("Please agree to the terms and conditions");
-      return;
-    }
+    if (!validateForm()) return;
+
     const updatedData = {
       name: fullName,
       phoneNo: phoneNumber,
       email: email,
-      // Add location if needed, e.g. location,
     };
+
     dispatch(updateEmployeeDetails(user?.user?.userName || "", updatedData));
   };
 
@@ -143,6 +169,7 @@ const EmployeeEditForm = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

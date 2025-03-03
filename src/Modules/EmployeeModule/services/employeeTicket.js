@@ -15,7 +15,7 @@ export const fetchTicketsFromAPI = async (id) => {
   }
   try {
     const response = await axios.get(
-      `https://localhost:8000/api/employees/${id}/tickets`,
+      `http://localhost:8000/api/employees/${id}/tickets`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -42,7 +42,7 @@ export const fetchSpecificTicketFromAPI = async (id) => {
   const userName = sessionObject?.user?.userName
   try {
     const response = await axios.get(
-      `https://localhost:8000/api/employees/${userName}/tickets/${id}`,
+      `http://localhost:8000/api/employees/${userName}/tickets/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ export const updateSpecificTicketFromAPI = async (id, updatedData) => {
   const userName = sessionObject?.user?.userName
   try {
     const response = await axios.put(
-      `https://localhost:8000/api/employees/${userName}/tickets/${id}`,
+      `http://localhost:8000/api/employees/${userName}/tickets/${id}`,
       updatedData,
       {
         headers: {

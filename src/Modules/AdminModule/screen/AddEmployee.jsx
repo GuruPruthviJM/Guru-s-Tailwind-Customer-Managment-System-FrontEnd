@@ -4,6 +4,15 @@ import { fetchAddEmployeeStatus } from "../../../Redux/admin_model/CRUD/addEmplo
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  validateEmail,
+  validatePassword,
+  validateRole,
+  validateFullName,
+  validateUserName,
+  validatePhoneNumber,
+  validatePincode,
+} from "../../../components/validation";
 
 const AddEmployee = () => {
   const dispatch = useDispatch();
@@ -12,13 +21,15 @@ const AddEmployee = () => {
   // Local state for form inputs
   const [formData, setFormData] = useState({
     name: "",
+    username: "",
     managerId: "",
     designation: "",
     department: "",
-    role: "", // default empty for "Choose Role"
+    role: "",
     email: "",
     phoneNo: "",
     password: "",
+    pincode: "",
   });
 
   // State for agreeTerms
@@ -34,12 +45,83 @@ const AddEmployee = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Form validation using imported validation functions
+  const validateForm = () => {
+    // Validate Role
+    const roleValidation = validateRole(formData.role);
+    if (!roleValidation.isValid) {
+      toast.error(roleValidation.message);
+      return false;
+    }
+    // Validate Full Name
+    const fullNameValidation = validateFullName(formData.name);
+    if (!fullNameValidation.isValid) {
+      toast.error(fullNameValidation.message);
+      return false;
+    }
+    // Validate User Name
+    const userNameValidation = validateUserName(formData.username);
+    if (!userNameValidation.isValid) {
+      toast.error(userNameValidation.message);
+      return false;
+    }
+    // Validate Email
+    const emailValidation = validateEmail(formData.email);
+    if (!emailValidation.isValid) {
+      toast.error(emailValidation.message);
+      return false;
+    }
+    // Validate Phone Number
+    const phoneValidation = validatePhoneNumber(formData.phoneNo);
+    if (!phoneValidation.isValid) {
+      toast.error(phoneValidation.message);
+      return false;
+    }
+    // Validate Password
+    const passwordValidation = validatePassword(formData.password);
+    if (!passwordValidation.isValid) {
+      toast.error(passwordValidation.message);
+      return false;
+    }
+    // Validate Pincode
+    const pincodeValidation = validatePincode(formData.pincode);
+    if (!pincodeValidation.isValid) {
+      toast.error(pincodeValidation.message);
+      return false;
+    }
+    // Role-specific fields
+    if (formData.role === "employees") {
+      if (!formData.managerId.trim()) {
+        toast.error("Manager ID is required for employees");
+        return false;
+      }
+      if (!formData.designation.trim()) {
+        toast.error("Designation is required for employees");
+        return false;
+      }
+      if (!formData.department.trim()) {
+        toast.error("Department is required for employees");
+        return false;
+      }
+    } else if (formData.role === "managers") {
+      if (!formData.department.trim()) {
+        toast.error("Department is required for managers");
+        return false;
+      }
+    }
+    // Validate Terms and Conditions
+    if (!agreeTerms) {
+      toast.error("You must agree to the terms.");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (formData.role === "") {
-      toast.error("Please choose a role");
-      return;
-    }
+
+    if (!validateForm()) return;
+
     dispatch(fetchAddEmployeeStatus(formData));
   };
 
@@ -49,6 +131,7 @@ const AddEmployee = () => {
       // Reset the form after successful registration
       setFormData({
         name: "",
+        username: "",
         managerId: "",
         designation: "",
         department: "",
@@ -56,11 +139,12 @@ const AddEmployee = () => {
         email: "",
         phoneNo: "",
         password: "",
+        pincode: "",
       });
       // Optionally navigate to another page
       // navigate("/employee/dashboard");
     }
-  }, [employee, navigate, dispatch]);
+  }, [employee, navigate]);
 
   // Common fields appear for all roles
   const commonFields = [
@@ -68,12 +152,7 @@ const AddEmployee = () => {
     { label: "User Name", type: "text", name: "username" },
     { label: "Email", type: "email", name: "email" },
     { label: "Phone No", type: "text", name: "phoneNo" },
-    {
-      label: "Password",
-      type: "password",
-      name: "password",
-      placeholder: "default password",
-    },
+    { label: "Password", type: "password", name: "password", placeholder: "default password" },
   ];
 
   // Additional fields based on role selection
@@ -119,7 +198,7 @@ const AddEmployee = () => {
               <input
                 type={type}
                 name={name}
-                value={formData[name]}
+                value={formData[name] || ""}
                 onChange={handleChange}
                 placeholder={placeholder || ""}
                 className="w-full p-2 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
@@ -130,64 +209,61 @@ const AddEmployee = () => {
           {/* Role Specific Fields */}
           {formData.role && roleSpecificFields[formData.role] && (
             <>
-              {roleSpecificFields[formData.role].map(
-                ({ label, type, name, placeholder }) => {
-                  // If the field is "department", render a dropdown
-                  if (name === "department") {
-                    return (
-                      <div className="mb-4" key={name}>
-                        <label className="block font-bold text-lg mb-1">
-                          {label}:
-                        </label>
-                        <select
-                          name={name}
-                          value={formData[name]}
-                          onChange={handleChange}
-                          className="w-full p-2 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
-                          required
-                        >
-                          <option value="" disabled>
-                            Select
-                          </option>
-                          <option value="Customer-Experience-Transformation">
-                            Customer-Experience-Transformation
-                          </option>
-                          <option value="Data-and-AI">Data-and-AI</option>
-                          <option value="Product-and-Platform-Engineering">
-                            Product-and-Platform-Engineering
-                          </option>
-                          <option value="Global-Design-Studio">
-                            Global-Design-Studio
-                          </option>
-                          <option value="Digital-Transformation-Consulting">
-                            Digital-Transformation-Consulting
-                          </option>
-                          <option value="Infrastructure-Cloud-and-Security">
-                            Infrastructure-Cloud-and-Security
-                          </option>
-                        </select>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div className="mb-4" key={name}>
-                        <label className="block font-bold text-lg mb-1">
-                          {label}:
-                        </label>
-                        <input
-                          type={type}
-                          name={name}
-                          value={formData[name] || ""}
-                          onChange={handleChange}
-                          placeholder={placeholder || ""}
-                          className="w-full p-2 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
-                          required
-                        />
-                      </div>
-                    );
-                  }
+              {roleSpecificFields[formData.role].map(({ label, type, name, placeholder }) => {
+                if (name === "department" && formData.role === "managers") {
+                  return (
+                    <div className="mb-4" key={name}>
+                      <label className="block font-bold text-lg mb-1">
+                        {label}:
+                      </label>
+                      <select
+                        name={name}
+                        value={formData[name]}
+                        onChange={handleChange}
+                        className="w-full p-2 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
+                        required
+                      >
+                        <option value="" disabled>
+                          Select
+                        </option>
+                        <option value="Customer-Experience-Transformation">
+                          Customer-Experience-Transformation
+                        </option>
+                        <option value="Data-and-AI">Data-and-AI</option>
+                        <option value="Product-and-Platform-Engineering">
+                          Product-and-Platform-Engineering
+                        </option>
+                        <option value="Global-Design-Studio">
+                          Global-Design-Studio
+                        </option>
+                        <option value="Digital-Transformation-Consulting">
+                          Digital-Transformation-Consulting
+                        </option>
+                        <option value="Infrastructure-Cloud-and-Security">
+                          Infrastructure-Cloud-and-Security
+                        </option>
+                      </select>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="mb-4" key={name}>
+                      <label className="block font-bold text-lg mb-1">
+                        {label}:
+                      </label>
+                      <input
+                        type={type}
+                        name={name}
+                        value={formData[name] || ""}
+                        onChange={handleChange}
+                        placeholder={placeholder || ""}
+                        className="w-full p-2 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
+                        required
+                      />
+                    </div>
+                  );
                 }
-              )}
+              })}
             </>
           )}
           {/* Terms and Conditions */}

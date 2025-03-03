@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser, logout } from "../../Redux/signUp/logIn/logInActions";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { validateEmail, validatePassword, validateRole } from "../validation";
 
 const Dropdown = ({ selectedRole, setSelectedRole }) => {
   const roles = ["Customers", "Employees", "Managers", "Admins"];
@@ -37,9 +38,10 @@ const Dropdown = ({ selectedRole, setSelectedRole }) => {
 };
 
 const LoginForm = () => {
-  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [selectedRole, setSelectedRole] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -66,12 +68,35 @@ const LoginForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    // Validate Email
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      toast.error(emailValidation.message, { position: "top-right" });
+      return;
+    }
+
+    // Validate Password
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation.isValid) {
+      toast.error(passwordValidation.message, { position: "top-right" });
+      return;
+    }
+
+    // Validate Role
+    const roleValidation = validateRole(selectedRole);
+    if (!roleValidation.isValid) {
+      toast.error(roleValidation.message, { position: "top-right" });
+      return;
+    }
+
     if (existingSession) {
-      alert("Please logout from the previous session.");
+      toast.success("Logged out successfully");
       sessionStorage.removeItem("user");
       return;
     }
-    dispatch(loginUser(username, password, selectedRole));
+
+    dispatch(loginUser(email, password, selectedRole));
   };
 
   const handleLogout = () => {
@@ -115,16 +140,16 @@ const LoginForm = () => {
                   </label>
                   <input
                     type="text"
-                    id="username"
+                    id="email"
                     className="mt-1 block w-full border border-gray-300 rounded-md p-3 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your Email"
                     required
                   />
                 </div>
 
-                <div className="mb-5">
+                <div className="mb-5 relative">
                   <label
                     htmlFor="password"
                     className="block text-lg font-bold text-gray-700 mb-1"
@@ -132,14 +157,55 @@ const LoginForm = () => {
                     Password
                   </label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
-                    className="mt-1 block w-full border border-gray-300 rounded-md p-3 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md p-3 pr-10 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
                     required
                   />
+                  <div
+                    className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer my-4"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 text-gray-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.27-2.943-9.543-7a9.953 9.953 0 012.432-3.54M6.165 6.165A9.953 9.953 0 0112 5c4.478 0 8.27 2.943 9.543 7a9.953 9.953 0 01-1.41 2.592M3 3l18 18"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 text-gray-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                      </svg>
+                    )}
+                  </div>
                 </div>
 
                 <Dropdown

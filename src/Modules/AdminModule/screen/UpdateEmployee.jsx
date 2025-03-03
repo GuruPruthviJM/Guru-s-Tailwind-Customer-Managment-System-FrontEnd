@@ -3,6 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUpdateEmployeeStatus } from "../../../Redux/admin_model/CRUD/updateEmployeeAction";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import {
+  validateEmail,
+  validateRole,
+  validateFullName,
+  validatePhoneNumber,
+} from "../../../components/validation";
 
 const UpdateEmployeePanel = () => {
   const dispatch = useDispatch();
@@ -20,38 +26,79 @@ const UpdateEmployeePanel = () => {
     (state) => state.updateEmployee
   );
 
+  // Validate form inputs before dispatching update action
+  const validateForm = () => {
+    // Validate Role
+    const roleValidation = validateRole(role);
+    if (!roleValidation.isValid) {
+      toast.error(roleValidation.message);
+      return false;
+    }
+    // Validate Employee ID (required)
+    if (!employeeId.trim()) {
+      toast.error("Employee ID is required");
+      return false;
+    }
+    // Ensure at least one update field is provided
+    if (!name.trim() && !email.trim() && !phoneNo.trim()) {
+      toast.error("Please provide at least one of Name, Email, or Phone Number.");
+      return false;
+    }
+    // Validate Name if provided
+    if (name.trim()) {
+      const fullNameValidation = validateFullName(name);
+      if (!fullNameValidation.isValid) {
+        toast.error(fullNameValidation.message);
+        return false;
+      }
+    }
+    // Validate Email if provided
+    if (email.trim()) {
+      const emailValidation = validateEmail(email);
+      if (!emailValidation.isValid) {
+        toast.error(emailValidation.message);
+        return false;
+      }
+    }
+    // Validate Phone Number if provided
+    if (phoneNo.trim()) {
+      const phoneValidation = validatePhoneNumber(phoneNo);
+      if (!phoneValidation.isValid) {
+        toast.error(phoneValidation.message);
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Build an updateData object with only the filled fields
+    if (!validateForm()) return;
+
+    // Build updateData with only provided fields
     let updateData = {};
     if (name.trim() !== "") updateData.name = name;
     if (email.trim() !== "") updateData.email = email;
-    if (phoneNo.trim() !== ""){
-      if(role==="employee"){
+    if (phoneNo.trim() !== "") {
+      // Depending on role, choose proper key for phone number
+      if (role === "employees") {
         updateData.phoneNo = phoneNo;
-      } else{
+      } else {
         updateData.phone_Number = phoneNo;
       }
     }
 
-    if (Object.keys(updateData).length === 0) {
-      toast.error("Please provide at least one of Name, Email or Phone Number.");
-      return;
-    }
-    
     dispatch(fetchUpdateEmployeeStatus(employeeId, role, updateData));
   };
 
   useEffect(() => {
     if (employee) {
-      // toast.success("Employee updated successfully.");
+      alert("Employee updated successfully.");
+      // Reset the form fields after successful update
       setEmployeeId("");
       setName("");
       setEmail("");
       setPhoneNo("");
-    //   setTimeout(() =>{
-    //     navigate("/admins")
-    // },3000)
     }
   }, [employee, navigate]);
 
@@ -97,6 +144,7 @@ const UpdateEmployeePanel = () => {
               className="w-full p-2 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="Enter new name (optional)"
             />
           </div>
           <div className="mb-4">
@@ -106,6 +154,7 @@ const UpdateEmployeePanel = () => {
               className="w-full p-2 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter new email (optional)"
             />
           </div>
           <div className="mb-4">
@@ -117,10 +166,11 @@ const UpdateEmployeePanel = () => {
               className="w-full p-2 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
               value={phoneNo}
               onChange={(e) => setPhoneNo(e.target.value)}
+              placeholder="Enter new phone number (optional)"
             />
           </div>
           {loading ? (
-            <div className="w-full text-center bg-blue-600 text-white py-3 rounded-md font-bold transition duration-200 hover:bg-blue-700">Updating...</div>
+            <div className="text-center text-blue-500">Updating...</div>
           ) : (
             <button
               type="submit"

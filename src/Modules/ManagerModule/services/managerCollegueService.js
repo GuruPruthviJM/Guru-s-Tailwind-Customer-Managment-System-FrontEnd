@@ -14,7 +14,7 @@ const fetchCollegueFromAPI = async (id) => {
         toast.error("Unauthorized can't fetch the details.");
         return;
     }
-    const response = await axios.get(`https://localhost:5000/api/managers/${id}/collegue`,{
+    const response = await axios.get(`http://localhost:5000/api/managers/${id}/collegue`,{
           headers: { 
           Authorization: `Bearer ${token}`, 
           "Content-Type": "application/json"

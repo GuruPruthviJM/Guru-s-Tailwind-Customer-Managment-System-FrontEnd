@@ -3,6 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateCustomerDetails, resetUpdateCustomerDetails } from "../../../Redux/customer_model/CustomerProfile/customerProfileEditActions";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {
+  validateFullName,
+  validateEmail,
+  validatePhoneNumber,
+  validatePincode,
+} from "../../../components/validation";
 
 const EditForm = () => {
   const dispatch = useDispatch();
@@ -28,7 +34,6 @@ const EditForm = () => {
       setUserName(user?.user?.userName || "");
       setPhoneNumber(customerDetails.phone_Number || "");
       setEmail(customerDetails.email || "");
-      // Assuming customerDetails now contains "pincode" instead of "location"
       setPincode(customerDetails.pincode || "");
     }
   }, [customerDetails, user]);
@@ -43,23 +48,49 @@ const EditForm = () => {
       }, 3000);
     }
   }, [updateSuccess, dispatch, navigate]);
-  
+
+  // Form validation function using common validations
+  const validateForm = () => {
+    const fullNameValidation = validateFullName(fullName);
+    if (!fullNameValidation.isValid) {
+      toast.error(fullNameValidation.message);
+      return false;
+    }
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      toast.error(emailValidation.message);
+      return false;
+    }
+    const phoneValidation = validatePhoneNumber(phoneNumber);
+    if (!phoneValidation.isValid) {
+      toast.error(phoneValidation.message);
+      return false;
+    }
+    const pincodeValidation = validatePincode(pincode);
+    if (!pincodeValidation.isValid) {
+      toast.error(pincodeValidation.message);
+      return false;
+    }
+    if (!agreeTerms) {
+      toast.error("You must agree to the terms and conditions");
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!agreeTerms) {
-      alert("Please agree to the terms and conditions");
-      return;
-    }
-    // Prepare the data payload to update, using pincode instead of location
+    if (!validateForm()) return;
+
+    // Prepare updated data payload
     const updatedData = {
       name: fullName,
-      phone_Number: phoneNumber,
       email: email,
+      phone_Number: phoneNumber,
       pincode: pincode,
     };
 
-    // Dispatch the update action using the user's username as the identifier.
+    // Dispatch update action using the user's username as the identifier.
     dispatch(updateCustomerDetails(user?.user?.userName || "", updatedData));
   };
 
@@ -176,3 +207,4 @@ const EditForm = () => {
 };
 
 export default EditForm;
+ 

@@ -13,7 +13,7 @@ const updateEmployeeService = async (id, role, formData) => {
 
     // }
     const response = await axios.put(
-      `https://localhost:3000/api/admins/${user}/${role}/${id}`, ///:id/employees/:empId
+      `http://localhost:3000/api/admins/${user}/${role}/${id}`, ///:id/employees/:empId
       formData,
       {
         headers: {

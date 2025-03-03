@@ -18,23 +18,43 @@ const DeleteEmployeePanel = () => {
     (state) => state.deleteEmployee
   );
 
+  // Validation function
+  const validateForm = () => {
+    if (!role) {
+      toast.error("Please choose a role");
+      return false;
+    }
+    if (!employeeId.trim()) {
+      toast.error("Please enter a valid Employee ID");
+      return false;
+    }
+    if (!reason.trim()) {
+      toast.error("Please provide a reason for deletion");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!validateForm()) return; // Stop submission if validation fails
+
     dispatch(fetchDeleteEmployeeStatus(employeeId, role, reason));
   };
 
-  // Optional: perform side effects on successful deletion
+  // Reset form after successful deletion
   useEffect(() => {
-      if (employee) {
-        // toast.success("Employee deleted successfully.");
-        setRole("")
-        setReason("")
-        setEmployeeId("")
-      //   setTimeout(() =>{
-      //     navigate("/admins")
-      // },3000)
-      }
-    }, [employee, navigate]);
+    if (employee) {
+      // Optionally, you can show a success toast here if needed.
+      setRole("");
+      setReason("");
+      setEmployeeId("");
+      // Optionally navigate after deletion
+      // setTimeout(() => {
+      //   navigate("/admins");
+      // }, 3000);
+    }
+  }, [employee, navigate]);
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center py-10 px-4">
@@ -43,7 +63,8 @@ const DeleteEmployeePanel = () => {
           Delete Employee
         </h2>
         <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+          {/* Role Selection */}
+          <div className="mb-4">
             <label className="block font-bold text-lg mb-1">Role:</label>
             <select
               className="w-full p-2 border border-gray-300 rounded transition duration-300 focus:outline-none focus:border-blue-500"
@@ -59,6 +80,7 @@ const DeleteEmployeePanel = () => {
               <option value="managers">Manager</option>
             </select>
           </div>
+          {/* Employee ID */}
           <div className="mb-4">
             <label className="block font-bold text-lg mb-1">
               Employee ID:
@@ -71,6 +93,7 @@ const DeleteEmployeePanel = () => {
               required
             />
           </div>
+          {/* Reason for Deletion */}
           <div className="mb-4">
             <label className="block font-bold text-lg mb-1">
               Reason for Deletion:

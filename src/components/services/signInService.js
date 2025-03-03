@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 export const signUpService = async (customerData) => {
     try{
         const response = await axios.post(
-            `https://localhost:7000/api/customers`,
+            `http://localhost:7000/api/customers`,
             customerData,
             { withCredentials: true }
         );

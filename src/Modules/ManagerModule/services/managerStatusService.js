@@ -7,7 +7,7 @@ const getTicketStatus = async (id) => {
     if (!token) {
       throw new Error('User not authenticated');
     }
-    const response = await axios.get(`https://localhost:5000/api/managers/${id}/ticketStatus`,{
+    const response = await axios.get(`http://localhost:5000/api/managers/${id}/ticketStatus`,{
           headers: { 
           Authorization: `Bearer ${token}`, 
           "Content-Type": "application/json"

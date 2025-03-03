@@ -15,7 +15,7 @@ export const updateManagerDetailsFromAPI = async (id, managerData) => {
   }
   try {
     const response = await axios.put(
-      `https://localhost:5000/api/managers/${id}`,
+      `http://localhost:5000/api/managers/${id}`,
        managerData,
       {
         headers: {

@@ -17,7 +17,7 @@ export const fetchCollegueFromAPI = async (id) => {
 
   try {
     const response = await axios.get(
-      `https://localhost:8000/api/employees/${id}/collegue`,
+      `http://localhost:8000/api/employees/${id}/collegue`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

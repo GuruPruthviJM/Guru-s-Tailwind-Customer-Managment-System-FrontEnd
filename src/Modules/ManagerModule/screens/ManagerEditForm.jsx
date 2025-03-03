@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateManagerDetails, resetUpdateManagerDetails } from "../../../Redux/manager_module/details/editActions";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { validateFullName, validateEmail, validatePhoneNumber } from "../../../components/validation";
 
 const ManagerEditForm = () => {
   const dispatch = useDispatch();
@@ -29,23 +30,45 @@ const ManagerEditForm = () => {
 
   useEffect(() => {
     if (updateSuccess) {
-      toast.success("ManagerDetails details updated", { position: "top-right" });
+      toast.success("Manager details updated", { position: "top-right" });
       navigate("/managers");
       dispatch(resetUpdateManagerDetails());
     }
-  }, [updateSuccess, dispatch]);
+  }, [updateSuccess, dispatch, navigate]);
+
+  const validateForm = () => {
+    const fullNameValidation = validateFullName(fullName);
+    if (!fullNameValidation.isValid) {
+      toast.error(fullNameValidation.message);
+      return false;
+    }
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      toast.error(emailValidation.message);
+      return false;
+    }
+    const phoneValidation = validatePhoneNumber(phoneNumber);
+    if (!phoneValidation.isValid) {
+      toast.error(phoneValidation.message);
+      return false;
+    }
+    if (!agreeTerms) {
+      toast.error("Please agree to the terms and conditions");
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!agreeTerms) {
-      alert("Please agree to the terms and conditions");
-      return;
-    }
+    if (!validateForm()) return;
+
     const updatedData = {
       name: fullName,
       phone_Number: phoneNumber,
-      email: email
+      email: email,
     };
+
     dispatch(updateManagerDetails(user?.user?.userName || "", updatedData));
   };
 
@@ -142,6 +165,7 @@ const ManagerEditForm = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -11,7 +11,7 @@ export const fetchChartDataFromAPI = async () => {
             throw new Error("No token found in session storage");
         }
         const username = session.user.userName;
-        const response = await axios.get(`https://localhost:3000/api/admins/${username}/ticketWithDomain`, {
+        const response = await axios.get(`http://localhost:3000/api/admins/${username}/ticketWithDomain`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",

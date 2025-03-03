@@ -16,7 +16,7 @@ export const updateEmployeeDetailsFromAPI = async (id, employeeData) => {
 
   try {
     const response = await axios.put(
-      `https://localhost:8000/api/employees/${id}`,
+      `http://localhost:8000/api/employees/${id}`,
       employeeData,
       {
         headers: {

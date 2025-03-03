@@ -33,7 +33,7 @@ const addEmployeeService = async (formData) => {
       throw new Error("User not authenticated");
     }
     const response = await axios.post(
-      `https://localhost:3000/api/admins/${userName}/${formData.role}`, // Adjust the endpoint if needed
+      `http://localhost:3000/api/admins/${userName}/${formData.role}`, // Adjust the endpoint if needed
       data,
       {
         headers: {
