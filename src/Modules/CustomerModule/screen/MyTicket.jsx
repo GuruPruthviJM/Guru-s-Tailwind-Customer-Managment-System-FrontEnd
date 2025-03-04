@@ -20,7 +20,6 @@ const TicketList = () => {
     { value: "ticketId", label: "Ticket ID" },
     { value: "employeeId", label: "Employee ID" },  
     { value: "ticketDescription", label: "Ticket Description" },
-    { value: "ticketStatus", label: "Ticket Status" },
     { value: "department", label: "Department" }
   ];
 
