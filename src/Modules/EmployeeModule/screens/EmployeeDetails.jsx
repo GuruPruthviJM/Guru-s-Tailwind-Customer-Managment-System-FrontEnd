@@ -14,19 +14,14 @@ const EmployeeList = () => {
   const { user } = useSelector((state) => state.auth);
 
   let {id} = useParams()
-  let display = false;
 
-  // Fetch customer details when the component mounts
   useEffect(() => {
-    
     if(id){
       dispatch(fetchEmployeeDetails(id));
     }else if (user?.user?.userName) {
       dispatch(fetchEmployeeDetails(user.user.userName));
     }
   }, [dispatch, user]);
-
-  // Define the fields to display and their labels
   const fieldsToDisplay = [
     { key: "name", label: "Employee Name" },
     { key: "employeeId", label: "Employee UserName" },
@@ -40,8 +35,6 @@ const EmployeeList = () => {
     dispatch(logout());
     navigate("/login");
   };
-
-
 
   const handleEdit = () => {
     navigate("/employees/edits");
@@ -89,7 +82,6 @@ const EmployeeList = () => {
         </div>
       )}
 
-      {/* Button container */}
       {!id && (
       <div className="flex justify-between items-center gap-4 mt-8">
         <button

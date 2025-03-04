@@ -20,6 +20,7 @@ import addEmployeeReducer from './admin_model/CRUD/addEmployeeReducer';
 import updateEmployeeReducer from './admin_model/CRUD/updateEmployeeReducer';
 import deleteEmployeeReducer from './admin_model/CRUD/deleteEmployeeReducer';
 import  employeeReducer from './admin_model/CRUD/readEmployeeReducer';
+import timeReducer from './employee_module/stats/statsReducer';
 
 const rootReducer = {
     tickets: ticketReducer,
@@ -43,6 +44,7 @@ const rootReducer = {
     updateEmployee: updateEmployeeReducer,
     deleteEmployee: deleteEmployeeReducer,
     employees: employeeReducer,
+    time: timeReducer
 };
 
 export default rootReducer;
