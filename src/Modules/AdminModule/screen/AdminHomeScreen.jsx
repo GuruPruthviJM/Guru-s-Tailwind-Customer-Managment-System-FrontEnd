@@ -30,8 +30,7 @@ const AdminHome = () => {
     dispatch(fetchChartData());
   }, [dispatch]);
 
-  // Transform ticketsCount data from { "lat_lng": count } to an array of objects:
-  // [{ lat: <number>, lng: <number>, ticketsCount: <number> }, ...]
+  
   const transformedTicketsData = useMemo(() => {
     if (!ticketsCount || typeof ticketsCount !== "object") return [];
     return Object.entries(ticketsCount).map(([key, value]) => {
@@ -44,8 +43,7 @@ const AdminHome = () => {
     });
   }, [ticketsCount]);
 
-  // Transform chartData from an object to an array:
-  // { category: value } becomes [{ name: category, value: value }, ...]
+  
   const transformedChartData = useMemo(() => {
     if (!chartData || typeof chartData !== "object") return [];
     return Object.entries(chartData).map(([key, value]) => ({
@@ -54,7 +52,7 @@ const AdminHome = () => {
     }));
   }, [chartData]);
 
-  // Admin action buttons (static)
+  
   const buttons = [
     {
       label: "Add Employee",

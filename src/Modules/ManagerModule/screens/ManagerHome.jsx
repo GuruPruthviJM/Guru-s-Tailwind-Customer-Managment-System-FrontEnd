@@ -157,7 +157,7 @@ const StatusTickets = () => {
         {ticketsError && <p className="text-center text-red-600">{ticketsError}</p>}
         {!ticketsLoading && !ticketsError && (
           <OutageMap
-            ticketsData={staticTickets}
+            ticketsData={transformedTicketsData}
             mapCenter={[22.5937, 78.9629]}
             zoom={5}
           />
