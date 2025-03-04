@@ -20,11 +20,8 @@ const EmployeeList = () => {
   useEffect(() => {
     
     if(id){
-      display=false;
       dispatch(fetchEmployeeDetails(id));
     }else if (user?.user?.userName) {
-      // console.log(id);
-      display=true;
       dispatch(fetchEmployeeDetails(user.user.userName));
     }
   }, [dispatch, user]);
@@ -93,7 +90,7 @@ const EmployeeList = () => {
       )}
 
       {/* Button container */}
-      {display && (
+      {!id && (
       <div className="flex justify-between items-center gap-4 mt-8">
         <button
           onClick={handleEdit}
