@@ -31,6 +31,7 @@ import DeleteEmployeePanel from './Modules/AdminModule/screen/DeleteEmployee';
 import TicketDetails from './Modules/CustomerModule/screen/TicketDetails';
 import EmployeeTicketDetails from './Modules/EmployeeModule/screens/TicketDetails';
 import EmployeeStats from './Modules/EmployeeModule/screens/EmployeeStats';
+import ManagerTicketDetails from './Modules/ManagerModule/screens/TicketDetails';
 
 export default function App() {
     const router = createBrowserRouter(
@@ -65,6 +66,7 @@ export default function App() {
           {/* Manager Module */}
           <Route path='/managers' element={<StatusTickets />} />
           <Route path='/managers/tickets/:id' element={<ManagerTicketList />} />
+          <Route path='/managers/tickets/:id/:ticketId' element={<ManagerTicketDetails />} />
           <Route path='/managers/colleague' element={<ManagerColleagues />} />
           <Route path='/managers/profile' element={<ManagerList />} />
           <Route path='/managers/profile/:id' element={<ManagerList />} />
