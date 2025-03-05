@@ -25,6 +25,9 @@ const ManagerTicketDetails = () => {
     }
   }, [dispatch, user]);
 
+  console.log(ticketDetails);
+  
+
   const renderValue = (key, value) => {
     // For ticket raise date, format as per Indian locale
     if (key === "ticketRaiseDate" && value) {
@@ -90,7 +93,7 @@ const ManagerTicketDetails = () => {
       {loading && <p className="text-center">Loading...</p>}
       {error && <p className="text-center text-red-600">{error}</p>}
 
-      {ticketDetails && (
+      {ticketDetails (
         <div>
           <div className="overflow-x-auto shadow-lg rounded-lg my-5">
             <table className="w-full border-collapse">
