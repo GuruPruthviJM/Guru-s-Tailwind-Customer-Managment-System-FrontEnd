@@ -36,9 +36,10 @@ const EmployeeStats = () => {
 
     const time = useMemo(()=>{
       if(!timeData || typeof timeData !== "object") return [];
+      console.log(timeData);
       return Object.entries(chartData).map(([department, ticketCount]) => ({
         name: department,
-        noOfTickets: ticketCount
+        value: ticketCount
       }));
     }, [timeData]);
 
