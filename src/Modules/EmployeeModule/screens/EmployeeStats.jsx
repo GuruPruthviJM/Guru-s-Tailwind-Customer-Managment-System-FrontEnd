@@ -26,21 +26,21 @@ const EmployeeStats = () => {
 
     useEffect(() => {
         dispatch(fetchTicketsCount());
-    }, [dispatch]);
+    }, [dispatch, ticketsCount]);
 
     useEffect(() => {
         dispatch(fetchChartData());
-    }, [dispatch]);
+    }, [dispatch, chartData]);
 
     useEffect(()=>{
       console.log(timeData);
       dispatch(fetchTimeData());
-    }, [dispatch]);
+    }, [dispatch, timeData]);
 
     const time = useMemo(()=>{
       if(!timeData || typeof timeData !== "object") return [];
       console.log(timeData);
-      return Object.entries(chartData).map(([department, ticketCount]) => ({
+      return Object.entries(timeData).map(([department, ticketCount]) => ({
         name: department,
         value: ticketCount
       }));
