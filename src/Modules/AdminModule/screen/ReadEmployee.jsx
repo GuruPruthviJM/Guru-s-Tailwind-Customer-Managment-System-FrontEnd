@@ -88,7 +88,7 @@ const EmployeeListAdmin = () => {
                   {employee.email}
                 </td>
                 <td className="py-3 px-6 border-t border-gray-200 group-hover:bg-black group-hover:text-white">
-                  {employee.phoneNumber}
+                  {employee.phoneNo}
                 </td>
                 <td className="py-3 px-6 border-t border-gray-200 group-hover:bg-black group-hover:text-white">
                   {employee.department}
