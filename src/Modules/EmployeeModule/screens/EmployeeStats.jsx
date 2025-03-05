@@ -7,6 +7,8 @@ import { fetchTicketsCount } from "../../../Redux/admin_model/outage/outageActio
 import { fetchTimeData } from "../../../Redux/employee_module/stats/statsActions";
 
 const EmployeeStats = () => {
+  console.log("Guru");
+  
     const dispatch = useDispatch();
     const { chartData, loading: chartLoading, error: chartError } = useSelector(
         (state) => state.chart
