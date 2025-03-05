@@ -35,12 +35,12 @@ const EmployeeStats = () => {
 
   // ✅ Memoize time data processing (Prevent unnecessary calculations)
   const time = useMemo(() => {
-    if (!timeData || typeof timeData !== "object" || !chartData) return [];
-    return Object.entries(chartData).map(([department, ticketCount]) => ({
+    if (!timeData || typeof timeData !== "object") return [];
+    return Object.entries(timeData).map(([department, ticketCount]) => ({
       name: department,
       value: ticketCount,
     }));
-  }, [timeData, chartData]); 
+  }, [timeData]); 
 
   // ✅ Memoized transformation of chartData
   const transformedChartData = useMemo(() => {
