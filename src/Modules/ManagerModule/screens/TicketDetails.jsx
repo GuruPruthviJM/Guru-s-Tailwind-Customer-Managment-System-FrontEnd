@@ -23,6 +23,9 @@ const ManagerTicketDetails = () => {
       dispatch(fetchTickets(id, ticketId));
     }
   }, [dispatch, user]);
+
+  console.log(ticketDetails);
+  
   
   const renderValue = (key, value) => {
     // For ticket raise date, format as per Indian locale
