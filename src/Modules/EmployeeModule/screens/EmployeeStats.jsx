@@ -31,6 +31,7 @@ const EmployeeStats = () => {
     }, [dispatch]);
 
     useEffect(()=>{
+      console.log(timeData);
       dispatch(fetchTimeData());
     }, [dispatch]);
 
