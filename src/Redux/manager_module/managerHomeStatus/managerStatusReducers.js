@@ -22,6 +22,7 @@ const initialState = {
           open: action.payload.open,
           inProgress: action.payload.inProgress,
           closed: action.payload.closed,
+          error: null,
         };
       case FETCH_TICKETS_STATUS_FAILURE:
         return {
