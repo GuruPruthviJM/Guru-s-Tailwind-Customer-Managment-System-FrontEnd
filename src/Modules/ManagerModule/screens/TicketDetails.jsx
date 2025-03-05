@@ -18,6 +18,7 @@ const ManagerTicketDetails = () => {
   // Fetch ticket details when the component mounts
   useEffect(() => {
     if (user?.user?.userName) {
+      console.log(id, ticketId);
       dispatch(fetchTickets(id, ticketId));
     }
   }, [dispatch, user]);

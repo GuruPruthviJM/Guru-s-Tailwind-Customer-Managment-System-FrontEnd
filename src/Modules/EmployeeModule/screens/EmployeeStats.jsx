@@ -14,10 +14,12 @@ const EmployeeStats = () => {
         (state) => state.outage
       );
 
-    const time = [
-      {name: "avgResolution", value: 157},
-      {name: "avgResponce", value: 188.25}
-    ]
+    const {timeData} = useSelector((state) => state.time);
+
+    // const time = [
+    //   {name: "avgResolution", value: 157},
+    //   {name: "avgResponce", value: 188.25}
+    // ]
 
     useEffect(() => {
         dispatch(fetchTicketsCount());
@@ -26,6 +28,14 @@ const EmployeeStats = () => {
     useEffect(() => {
         dispatch(fetchChartData());
     }, [dispatch]);
+
+    const time = useMemo(()=>{
+      if(!timeData || typeof timeData !== "object") return [];
+      return Object.entries(chartData).map(([department, ticketCount]) => ({
+        name: department,
+        noOfTickets: ticketCount
+      }));
+    }, [timeData]);
 
     const transformedChartData = useMemo(() => {
         if (!chartData || typeof chartData !== "object") return [];

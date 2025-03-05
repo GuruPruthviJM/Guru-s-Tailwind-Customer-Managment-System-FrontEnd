@@ -3,7 +3,7 @@ import {
     FETCH_TIME_DATA_SUCCESS,
     FETCH_TIME_DATA_FAILURE,
   } from "./statsType";
-  import { fetchTimeDataFromAPI } from "../../../Modules/EmployeeModule/services/stats";
+  import { fetchTimeDataFromAPI } from "../../../Modules/EmployeeModule/services/employeeStats";
   
   export const fetchTimeDataRequest = () => ({
     type: FETCH_TIME_DATA_REQUEST,
