@@ -1,7 +1,7 @@
 import { 
-  FETCH_TICKETS_STATUS_REQUEST, 
-  FETCH_TICKETS_STATUS_SUCCESS, 
-  FETCH_TICKETS_STATUS_FAILURE 
+  FETCH_TICKETS_MANAGER_STATUS_REQUEST, 
+  FETCH_TICKETS_MANAGER_STATUS_SUCCESS, 
+  FETCH_TICKETS_MANAGER_STATUS_FAILURE 
 } from "./managerStatusType";
 
 const initialState = {
@@ -14,21 +14,21 @@ const initialState = {
 
 const managerStatusReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_TICKETS_STATUS_REQUEST:
+    case FETCH_TICKETS_MANAGER_STATUS_REQUEST:
       return {
         ...state,
         loading: true
       };
-    case FETCH_TICKETS_STATUS_SUCCESS:
+    case FETCH_TICKETS_MANAGER_STATUS_SUCCESS:
       return {
         ...state,
         loading: false,
-        open: action.payload.open,
-        inProgress: action.payload.inProgress,
-        closed: action.payload.closed,
+        open: action.payload.OPEN,
+        inProgress: action.payload.PENDING,
+        closed: action.payload.CLOSED,
         error: null
       };
-    case FETCH_TICKETS_STATUS_FAILURE:
+    case FETCH_TICKETS_MANAGER_STATUS_FAILURE:
       return {
         ...state,
         loading: false,
