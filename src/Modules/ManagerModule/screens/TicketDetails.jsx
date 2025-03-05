@@ -11,10 +11,11 @@ const ManagerTicketDetails = () => {
 
   // Assume your Redux state now holds ticket details in "tickets"
   const { tickets, loading, error } = useSelector((state) => state.tickets);
+  
   const ticketDetails = tickets.find((ticket) => ticket.ticketId === id);
-
+  
   const { user } = useSelector((state) => state.auth);
-
+  
   // Fetch ticket details when the component mounts
   useEffect(() => {
     if (user?.user?.userName) {
@@ -22,7 +23,8 @@ const ManagerTicketDetails = () => {
       dispatch(fetchTickets(id, ticketId));
     }
   }, [dispatch, user]);
-
+  
+  console.log(tickets);
   // Helper function to conditionally style the status button based on ticketStatus
   const getStatusButtonStyle = (status) => {
     switch (status.toLowerCase()) {
@@ -92,6 +94,8 @@ const ManagerTicketDetails = () => {
     { key: "ticketRaiseDate", label: "Ticket Raise Date" },
     { key: "ticketStatusHistory", label: "Ticket Status History" },
   ];
+
+
 
   return (
     <div className="container mx-auto mt-5 px-4">

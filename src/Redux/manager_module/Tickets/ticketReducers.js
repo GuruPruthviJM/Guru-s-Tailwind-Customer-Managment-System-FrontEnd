@@ -10,7 +10,7 @@ const initialState = {
   error: "",
 };
 
-const ticketReducer = (state = initialState, action) => {
+const ticketManagerReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_TICKETS_REQUEST:
       return { ...state, loading: true, error: "" };
@@ -38,4 +38,4 @@ const ticketReducer = (state = initialState, action) => {
   }
 };
 
-export default ticketReducer;
+export default ticketManagerReducer;
