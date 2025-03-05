@@ -5,13 +5,12 @@ export const fetchTicketStats = (id) => async (dispatch) => {
   dispatch({ type: FETCH_TICKETS_STATUS_REQUEST });
   try {
     const { OPEN: open, PENDING: inProgress, CLOSED: closed } = await getTicketStatus(id);
-    console.log("Guru");
     dispatch({
       type: FETCH_TICKETS_STATUS_SUCCESS,
       payload: { open, inProgress, closed }
     });
   } catch (error) {
-    console.error("Error fetching ticket stats:", error);   
+    console.error("Error fetching ticket stats", error);   
     dispatch({
       type: FETCH_TICKETS_STATUS_FAILURE,
       payload: error.message,
