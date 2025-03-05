@@ -21,6 +21,8 @@ export const fetchTickets = (customerId) => {
         dispatch(fetchTicketsRequest());
         try {
             const tickets = await fetchTicketsFromAPI(customerId); // Pass customerId
+            console.log(tickets);
+            
             dispatch(fetchTicketsSuccess(tickets));
         } catch (error) {
             dispatch(fetchTicketsFailure(error.message || 'Network Error'));
