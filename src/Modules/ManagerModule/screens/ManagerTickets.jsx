@@ -14,7 +14,7 @@ const ManagerTicketList = () => {
       dispatch(fetchTickets(user?.user?.userName, ticketStatus));
   }, [dispatch, user, ticketStatus]);
 
-  const { tickets, loading, error } = useSelector((state) => state.tickets);
+  const { tickets, loading, error } = useSelector((state) => state.ticketManagerTableReducer);
 
   const handleClick = (ticketId) => {
     navigate(`${ticketId}`);
