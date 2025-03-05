@@ -17,7 +17,7 @@ const managerStatusReducer = (state = initialState, action) => {
     case FETCH_TICKETS_STATUS_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     case FETCH_TICKETS_STATUS_SUCCESS:
       console.log("Guru...", action.payload); // Debug message; remove in production
@@ -27,13 +27,13 @@ const managerStatusReducer = (state = initialState, action) => {
         open: action.payload.open,
         inProgress: action.payload.inProgress,
         closed: action.payload.closed,
-        error: null,
+        error: null
       };
     case FETCH_TICKETS_STATUS_FAILURE:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload
       };
     default:
       return state;
