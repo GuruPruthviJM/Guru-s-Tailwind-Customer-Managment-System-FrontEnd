@@ -1,8 +1,8 @@
 import axios from "axios";
 import {
-  FETCH_TICKETS_REQUEST,
-  FETCH_TICKETS_SUCCESS,
-  FETCH_TICKETS_FAILURE,
+  FETCH_TICKETS_EMPLOYEE_REQUEST,
+  FETCH_TICKETS_EMPLOYEE_SUCCESS,
+  FETCH_TICKETS_EMPLOYEE_FAILURE,
   UPDATE_TICKET_STATUS_REQUEST,
   UPDATE_TICKET_STATUS_SUCCESS,
   UPDATE_TICKET_STATUS_FAILURE,
@@ -10,16 +10,16 @@ import {
 import { fetchTicketsFromAPI, updateSpecificTicketFromAPI } from '../../../Modules/EmployeeModule/services/employeeTicket';
 // Fetch Tickets Thunk
 export const fetchTicketsRequest = () => ({
-  type: FETCH_TICKETS_REQUEST,
+  type: FETCH_TICKETS_EMPLOYEE_REQUEST,
 });
 
 export const fetchTicketsSuccess = (tickets) => ({
-  type: FETCH_TICKETS_SUCCESS,
+  type: FETCH_TICKETS_EMPLOYEE_SUCCESS,
   payload: tickets,
 });
 
 export const fetchTicketsFailure = (error) => ({
-  type: FETCH_TICKETS_FAILURE,
+  type: FETCH_TICKETS_EMPLOYEE_FAILURE,
   payload: error,
 });
 
