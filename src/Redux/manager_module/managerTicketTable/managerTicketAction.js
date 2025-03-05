@@ -25,6 +25,7 @@ export const fetchTickets = (managerId, ticketStatus) => {
             
             dispatch(fetchTicketsSuccess(tickets));
         } catch (error) {
+            console.log(error);
             dispatch(fetchTicketsFailure(error.message || 'Network Error'));
         }
     };
