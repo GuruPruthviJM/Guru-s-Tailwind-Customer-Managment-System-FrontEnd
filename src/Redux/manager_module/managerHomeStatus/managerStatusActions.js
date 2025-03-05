@@ -1,19 +1,37 @@
 import getTicketStatus from "../../../Modules/ManagerModule/services/managerStatusService";
-import { FETCH_TICKETS_STATUS_REQUEST, FETCH_TICKETS_STATUS_SUCCESS, FETCH_TICKETS_STATUS_FAILURE } from "./managerStatusType";
+import { 
+  FETCH_TICKETS_STATUS_REQUEST, 
+  FETCH_TICKETS_STATUS_SUCCESS, 
+  FETCH_TICKETS_STATUS_FAILURE 
+} from "./managerStatusType";
 
+// Async action creator for fetching ticket stats
 export const fetchTicketStats = (id) => async (dispatch) => {
   dispatch({ type: FETCH_TICKETS_STATUS_REQUEST });
+
   try {
-    const { OPEN: open, PENDING: inProgress, CLOSED: closed } = await getTicketStatus(id);
+    // Fetch ticket data from API
+    const response = await getTicketStatus(id);
+
+    // Validate response
+    if (!response || typeof response !== "object") {
+      throw new Error("Invalid response from server");
+    }
+
+    // Extracting and providing default values to prevent null issues
+    const { OPEN: open = 0, PENDING: inProgress = 0, CLOSED: closed = 0 } = response;
+
     dispatch({
       type: FETCH_TICKETS_STATUS_SUCCESS,
-      payload: { open, inProgress, closed }
+      payload: { open, inProgress, closed },
     });
+
   } catch (error) {
-    console.error("Error fetching ticket stats", error);   
+    console.error("Error fetching ticket stats:", error);
+    
     dispatch({
       type: FETCH_TICKETS_STATUS_FAILURE,
-      payload: error.message,
+      payload: error.response?.data?.message || error.message || "Failed to fetch ticket stats",
     });
   }
 };
