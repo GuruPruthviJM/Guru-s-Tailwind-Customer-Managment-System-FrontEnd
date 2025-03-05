@@ -20,7 +20,7 @@ export const fetchTicketStats = (id) => async (dispatch) => {
 
     // Extracting and providing default values to prevent null issues
     const { OPEN: open = 0, PENDING: inProgress = 0, CLOSED: closed = 0 } = response;
-
+    console.log(open, inProgress, closed);
     dispatch({
       type: FETCH_TICKETS_STATUS_SUCCESS,
       payload: { open, inProgress, closed },
