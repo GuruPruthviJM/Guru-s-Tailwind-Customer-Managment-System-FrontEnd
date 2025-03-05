@@ -20,7 +20,7 @@ const managerStatusReducer = (state = initialState, action) => {
         loading: true,
       };
     case FETCH_TICKETS_STATUS_SUCCESS:
-      console.log("Guru..."); // Debug message; remove in production
+      console.log("Guru...", action.payload); // Debug message; remove in production
       return {
         ...state,
         loading: false,
