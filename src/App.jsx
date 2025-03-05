@@ -30,7 +30,7 @@ import UpdateEmployeePanel from './Modules/AdminModule/screen/updateEmployee';
 import DeleteEmployeePanel from './Modules/AdminModule/screen/DeleteEmployee';
 import TicketDetails from './Modules/CustomerModule/screen/TicketDetails';
 import EmployeeTicketDetails from './Modules/EmployeeModule/screens/TicketDetails';
-import EmployeeStats from './Modules/EmployeeModule/screens/EmployeeStats';
+// import EmployeeStats from './Modules/EmployeeModule/screens/EmployeeStats';
 import ManagerTicketDetails from './Modules/ManagerModule/screens/TicketDetails';
 
 export default function App() {
@@ -62,7 +62,7 @@ export default function App() {
           <Route path='/employees/profile/:id' element={<EmployeeList />} />
           <Route path='/employees/edits' element={<EmployeeEditForm />} />
           <Route path='/employees/tickets/:id' element={<EmployeeTicketDetails />} />
-          <Route path='/employees/stats' element={<EmployeeStats />} />
+          {/* <Route path='/employees/stats' element={<EmployeeStats />} /> */}
           {/* Manager Module */}
           <Route path='/managers' element={<StatusTickets />} />
           <Route path='/managers/tickets/:id' element={<ManagerTicketList />} />
