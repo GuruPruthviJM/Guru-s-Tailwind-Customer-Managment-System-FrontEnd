@@ -59,10 +59,10 @@ const OutageMap = ({
           style={{ width: "100%", height: "100%" }}
           className="rounded-[10px] overflow-hidden shadow-[0_4px_8px_rgba(0,0,0,0.2)]"
         >
-          <TileLayer
+          {/* <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
+          /> */}
           <MarkerClusterGroup
             iconCreateFunction={(cluster) =>
               createClusterIcon(cluster, minTickets, maxTickets)
