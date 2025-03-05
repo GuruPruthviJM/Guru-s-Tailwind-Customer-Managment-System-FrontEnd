@@ -12,7 +12,7 @@ export const fetchTimeDataFromAPI = async () => {
     await delay(2000)
     window.location.href = "/login"
   }
-  const response = await axios.get(`https://18.209.26.169:8000/api/employees/${userName}/stats`, {
+  const response = await axios.get(`http://18.209.26.169:8000/api/employees/${userName}/stats`, {
     headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
