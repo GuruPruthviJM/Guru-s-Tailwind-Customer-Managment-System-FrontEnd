@@ -1,41 +1,43 @@
-import { FETCH_TICKETS_STATUS_REQUEST, FETCH_TICKETS_STATUS_SUCCESS, FETCH_TICKETS_STATUS_FAILURE } from "./managerStatusType";
+import { 
+  FETCH_TICKETS_STATUS_REQUEST, 
+  FETCH_TICKETS_STATUS_SUCCESS, 
+  FETCH_TICKETS_STATUS_FAILURE 
+} from "./managerStatusType";
 
 const initialState = {
-    open: 0,
-    inProgress: 0,
-    closed: 0,
-    loading: false,
-    error: null,
-  };
-  
-  const managerStatusReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case FETCH_TICKETS_STATUS_REQUEST:
-        return {
-          ...state,
-          loading: true,
-        };
-      case FETCH_TICKETS_STATUS_SUCCESS:
-        console.log("Guru...");
-        
-        return {
-          ...state,
-          loading: false,
-          open: action.payload.open,
-          inProgress: action.payload.inProgress,
-          closed: action.payload.closed,
-          error: null,
-        };
-      case FETCH_TICKETS_STATUS_FAILURE:
-        return {
-          ...state,
-          loading: false,
-          error: action.payload,
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default managerStatusReducer;
-  
+  open: 0,
+  inProgress: 0,
+  closed: 0,
+  loading: false,
+  error: null,
+};
+
+const managerStatusReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_TICKETS_STATUS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_TICKETS_STATUS_SUCCESS:
+      console.log("Guru..."); // Debug message; remove in production
+      return {
+        ...state,
+        loading: false,
+        open: action.payload.open,
+        inProgress: action.payload.inProgress,
+        closed: action.payload.closed,
+        error: null,
+      };
+    case FETCH_TICKETS_STATUS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export default managerStatusReducer;
