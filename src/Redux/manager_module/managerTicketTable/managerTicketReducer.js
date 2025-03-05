@@ -1,6 +1,6 @@
 // src/redux/ticket/ticketReducer.js
 
-import { FETCH_TICKETS_FAILURE, FETCH_TICKETS_REQUEST, FETCH_TICKETS_SUCCESS } from './managerTicketType';
+import { FETCH_TICKETS_TABLE_FAILURE, FETCH_TICKETS_TABLE_REQUEST, FETCH_TICKETS_TABLE_SUCCESS } from './managerTicketType';
 
 const initialState = {
     loading: false,
@@ -10,12 +10,12 @@ const initialState = {
 
 const ticketReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_TICKETS_REQUEST:
+        case FETCH_TICKETS_TABLE_REQUEST:
             return { ...state, loading: true };
-        case FETCH_TICKETS_SUCCESS:
+        case FETCH_TICKETS_TABLE_SUCCESS:
             console.log(action.payload); // Debugging purpose
             return { ...state, loading: false, tickets: action.payload, error: '' };
-        case FETCH_TICKETS_FAILURE:
+        case FETCH_TICKETS_TABLE_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:
             return state;
