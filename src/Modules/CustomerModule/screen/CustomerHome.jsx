@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Cards from '../../../components/Cards';
 
-const slides = [
+const defaultSlides = [
   {
     title: "Beyond the Curve: Key industry-shaping technology themes for 2025!",
     image: "/beyond.png",
@@ -28,15 +28,47 @@ const slides = [
   }
 ];
 
-const Home = () => {
-  const [activeIndex, setActiveIndex] = useState(3);
+const Home = ({ slidesData }) => {
+  // Use slidesData if provided; otherwise, defaultSlides.
+  const [slides, setSlides] = useState(slidesData || defaultSlides);
+  const [activeIndex, setActiveIndex] = useState(0);
 
+  // Update slides if the slidesData prop changes.
+  useEffect(() => {
+    if (slidesData) {
+      setSlides(slidesData);
+      setActiveIndex(0);
+    }
+  }, [slidesData]);
+
+  // Optional: Fetch slides from an API if no slidesData is passed.
+  useEffect(() => {
+    if (!slidesData) {
+      const fetchSlides = async () => {
+        try {
+          const response = await fetch('/api/slides'); // Adjust the endpoint accordingly.
+          if (response.ok) {
+            const data = await response.json();
+            if (data.slides && data.slides.length > 0) {
+              setSlides(data.slides);
+              setActiveIndex(0);
+            }
+          }
+        } catch (error) {
+          console.error('Failed to fetch slides:', error);
+        }
+      };
+      fetchSlides();
+    }
+  }, [slidesData]);
+
+  // Automatically change slides every 3 seconds.
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % slides.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [slides]);
 
   const goToPrev = () => {
     setActiveIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
@@ -48,7 +80,6 @@ const Home = () => {
 
   return (
     <div className="w-full">
-      {/* Carousel Container with shadow for a shaded border */}
       <div className="relative shadow-lg">
         {/* Carousel Indicators */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
