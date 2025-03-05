@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEmployees } from "../../../Redux/employee_model/Employees/employeeActions";
+import { fetchEmployees } from "../../../Redux/admin_model/CRUD/readEmployeeAction";
 import { useNavigate } from "react-router-dom";
 
-const EmployeeList = () => {
+const EmployeeListAdmin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { employees, loading, error } = useSelector((state) => state.employees);
@@ -110,4 +110,4 @@ const EmployeeList = () => {
   );
 };
 
-export default EmployeeList;
+export default EmployeeListAdmin;

@@ -32,6 +32,7 @@ import TicketDetails from './Modules/CustomerModule/screen/TicketDetails';
 import EmployeeTicketDetails from './Modules/EmployeeModule/screens/TicketDetails';
 import EmployeeStats from './Modules/EmployeeModule/screens/EmployeeStats';
 import ManagerTicketDetails from './Modules/ManagerModule/screens/TicketDetails';
+import EmployeeListAdmin from './Modules/AdminModule/screen/ReadEmployee';
 
 export default function App() {
     const router = createBrowserRouter(
@@ -76,6 +77,7 @@ export default function App() {
           <Route path='/admins/addEmployee' element={<AddEmployee />} />
           <Route path='/admins/updateEmployee' element={<UpdateEmployeePanel />} />
           <Route path='/admins/deleteEmployee' element={<DeleteEmployeePanel />} /> 
+          <Route path='/admins/readEmployee' element={<EmployeeListAdmin />} />
         </Route>
     )
   );
