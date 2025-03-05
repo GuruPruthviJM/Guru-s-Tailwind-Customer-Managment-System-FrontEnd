@@ -80,7 +80,7 @@ const EmployeeStats = () => {
         </div>
         <div>
           <h2 className="text-3xl font-bold mb-4">
-            Avg Responce and Avg Resoulution Time
+            Avg Response and Avg Resoulution Time
           </h2>
           {chartLoading && <p className="text-center">Loading chart data...</p>}
           {chartError && <p className="text-center text-red-600">{chartError}</p>}
