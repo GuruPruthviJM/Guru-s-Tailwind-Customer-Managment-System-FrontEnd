@@ -22,7 +22,7 @@ import ManagerTicketList from './Modules/ManagerModule/screens/ManagerTickets';
 import ManagerColleagues from './Modules/ManagerModule/screens/ManagerCollegue';
 import ManagerList from './Modules/ManagerModule/screens/ManagerDetails';
 import ManagerEditForm from './Modules/ManagerModule/screens/ManagerEditForm';
-import OtpForm from './components/SignIn/OTPForm';
+import OtpForm from './components/SignIn/OtpForm';
 import AdminHome from './Modules/AdminModule/screen/AdminHomeScreen';
 import TicketRaise from './Modules/CustomerModule/screen/TicketRaise';
 import AddEmployee from './Modules/AdminModule/screen/AddEmployee';
