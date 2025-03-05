@@ -7,111 +7,122 @@ import { fetchTicketsCount } from "../../../Redux/admin_model/outage/outageActio
 import { fetchTimeData } from "../../../Redux/employee_module/stats/statsActions";
 
 const EmployeeStats = () => {
-  console.log("Guru");
-  
-    const dispatch = useDispatch();
-    const { chartData, loading: chartLoading, error: chartError } = useSelector(
-        (state) => state.chart
-      );
-    const { ticketsCount, loading: ticketsLoading, error: ticketsError } = useSelector(
-        (state) => state.outage
-      );
+  const dispatch = useDispatch();
 
-    const {timeData} = useSelector((state) => state.time);
+  // Redux State Selectors
+  const { chartData, loading: chartLoading, error: chartError } = useSelector((state) => state.chart);
+  const { ticketsCount, loading: ticketsLoading, error: ticketsError } = useSelector((state) => state.outage);
+  const { timeData } = useSelector((state) => state.time);
 
-    // const time = [
-    //   {name: "avgResolution", value: 157},
-    //   {name: "avgResponce", value: 188.25}
-    // ]
+  // ✅ Prevent redundant API calls if data already exists
+  useEffect(() => {
+    if (!ticketsCount || Object.keys(ticketsCount).length === 0) {
+      dispatch(fetchTicketsCount());
+    }
+  }, [dispatch, ticketsCount]);
 
-    useEffect(() => {
-        dispatch(fetchTicketsCount());
-    }, [dispatch, ticketsCount]);
+  useEffect(() => {
+    if (!chartData || Object.keys(chartData).length === 0) {
+      dispatch(fetchChartData());
+    }
+  }, [dispatch, chartData]);
 
-    useEffect(() => {
-        dispatch(fetchChartData());
-    }, [dispatch, chartData]);
-
-    useEffect(()=>{
-      console.log(timeData);
+  useEffect(() => {
+    if (!timeData || Object.keys(timeData).length === 0) {
       dispatch(fetchTimeData());
-    }, [dispatch, timeData]);
+    }
+  }, [dispatch, timeData]);
 
-    const time = useMemo(()=>{
-      if(!timeData || typeof timeData !== "object") return [];
-      console.log(timeData);
-      return Object.entries(timeData).map(([department, ticketCount]) => ({
-        name: department,
-        value: ticketCount
-      }));
-    }, [timeData]);
+  // ✅ Memoize time data processing (Prevent unnecessary calculations)
+  const time = useMemo(() => {
+    if (!timeData || typeof timeData !== "object" || !chartData) return [];
+    return Object.entries(chartData).map(([department, ticketCount]) => ({
+      name: department,
+      value: ticketCount,
+    }));
+  }, [timeData, chartData]); 
 
-    const transformedChartData = useMemo(() => {
-        if (!chartData || typeof chartData !== "object") return [];
+  // ✅ Memoized transformation of chartData
+  const transformedChartData = useMemo(() => {
+    if (!chartData || typeof chartData !== "object" || Object.keys(chartData).length === 0) 
+      return [];
 
-        return Object.entries(chartData).map(([department, ticketCount]) => ({
-            name: department,
-            noOfTickets: ticketCount
-        }));
-    }, [chartData]);
+    return Object.entries(chartData).map(([department, ticketCount]) => ({
+      name: department,
+      noOfTickets: ticketCount,
+    }));
+  }, [chartData]);
 
-    const transformedTicketsData = useMemo(() => {
-        if (!ticketsCount || typeof ticketsCount !== "object") return [];
-        return Object.entries(ticketsCount).map(([key, value]) => {
-          const [lat, lng] = key.split("_");
-          return {
-            lat: parseFloat(lat),
-            lng: parseFloat(lng),
-            ticketsCount: value,
-          };
-        });
-      }, [ticketsCount]);
+  // ✅ Memoized transformation of ticketsCount for OutageMap
+  const transformedTicketsData = useMemo(() => {
+    if (!ticketsCount || typeof ticketsCount !== "object" || Object.keys(ticketsCount).length === 0) 
+      return [];
 
-    return (
-        <div>
-            <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 mx-32 my-8">
+    return Object.entries(ticketsCount).map(([key, value]) => {
+      const [lat, lng] = key.split("_");
+      return {
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
+        ticketsCount: value,
+      };
+    });
+  }, [ticketsCount]);
+
+  return (
+    <div>
+      {/* Section: Tickets Raised Per Domain */}
+      <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 mx-32 my-8">
         <div>
           <h2 className="text-3xl font-bold mb-4">
             Tickets Raised As Per the Domain
           </h2>
           {chartLoading && <p className="text-center">Loading chart data...</p>}
           {chartError && <p className="text-center text-red-600">{chartError}</p>}
-          {!chartLoading && !chartError && chartData && (
+          {!chartLoading && !chartError && transformedChartData.length > 0 ? (
             <MyBarChart data={transformedChartData} attribute={"noOfTickets"} color={"#8884d8"} />
+          ) : (
+            <p className="text-center">No data available</p>
           )}
         </div>
+
+        {/* Section: Avg Response & Resolution Time */}
         <div>
           <h2 className="text-3xl font-bold mb-4">
-            Avg Response and Avg Resoulution Time
+            Avg Response and Avg Resolution Time
           </h2>
           {chartLoading && <p className="text-center">Loading chart data...</p>}
           {chartError && <p className="text-center text-red-600">{chartError}</p>}
-          {!chartLoading && !chartError && chartData && (
+          {!chartLoading && !chartError && time.length > 0 ? (
             <MyBarChart data={time} color={"purple"} attribute={"value"} />
+          ) : (
+            <p className="text-center">No data available</p>
           )}
         </div>
       </div>
 
       <hr className="my-8 border-gray-300" />
 
+      {/* Section: Tickets Raised (Outage Map) */}
       <div>
         <h1 className="text-3xl font-extrabold mb-10 bg-clip-text my-8 mx-32">
-          Number of tickets raised
+          Number of Tickets Raised
         </h1>
         {ticketsLoading && <p className="text-center">Loading tickets...</p>}
         {ticketsError && <p className="text-center text-red-600">{ticketsError}</p>}
-        {!ticketsLoading && !ticketsError && (
+        {!ticketsLoading && !ticketsError && transformedTicketsData.length > 0 ? (
           <OutageMap
             ticketsData={transformedTicketsData}
             mapCenter={[22.5937, 78.9629]}
             zoom={5}
           />
+        ) : (
+          <p className="text-center">No data available</p>
         )}
       </div>
 
       <hr className="my-8 border-gray-300" />
     </div>
-    );
+  );
 };
 
 export default EmployeeStats;
