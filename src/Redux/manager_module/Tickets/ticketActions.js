@@ -38,35 +38,3 @@ export const fetchTickets = (id, ticketId) => {
     }
   };
 };
-
-// Update Ticket Status Thunk
-export const updateTicketStatusRequest = () => ({
-  type: UPDATE_TICKET_STATUS_REQUEST,
-});
-
-export const updateTicketStatusSuccess = (ticket) => ({
-  type: UPDATE_TICKET_STATUS_SUCCESS,
-  payload: ticket,
-});
-
-export const updateTicketStatusFailure = (error) => ({
-  type: UPDATE_TICKET_STATUS_FAILURE,
-  payload: error,
-});
-
-export const updateTicketStatus = (ticketId, newStatus) => {
-  return async (dispatch) => {
-    dispatch(updateTicketStatusRequest());
-    try {
-      // Replace the URL with your actual endpoint for updating ticket status
-      const response = await updateSpecificTicketFromAPI(ticketId, newStatus);
-      dispatch(updateTicketStatusSuccess(response));
-    } catch (error) {
-      dispatch(
-        updateTicketStatusFailure(
-          error.response?.data?.message || "Failed to update ticket status"
-        )
-      );
-    }
-  };
-};
