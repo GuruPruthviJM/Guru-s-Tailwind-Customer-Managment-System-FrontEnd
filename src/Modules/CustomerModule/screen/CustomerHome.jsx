@@ -100,24 +100,24 @@ const Home = ({ slidesData }) => {
               key={idx}
               className={`${
                 activeIndex === idx ? 'relative opacity-100' : 'absolute opacity-0'
-              } transition-opacity duration-500 ease-in-out bg-gradient-to-r from-black to-gray-300 flex items-center justify-center w-full h-[80vh]`}
+              } transition-opacity duration-500 ease-in-out bg-gradient-to-r from-black to-gray-300 flex items-center justify-center w-full h-[60vh] md:h-[80vh]`}
             >
               <div className="flex flex-wrap items-center w-full">
                 {/* Text Section */}
-                <div className="w-full md:w-1/2 pl-[10%]">
-                  <h1 className="text-white text-3xl font-bold mb-4">{slide.title}</h1>
+                <div className="w-full md:w-1/2 px-4 md:pl-[10%]">
+                  <h1 className="text-white text-2xl sm:text-3xl font-bold mb-4">{slide.title}</h1>
                   {slide.text && (
-                    <p className="text-white text-lg">
+                    <p className="text-white text-base sm:text-lg">
                       {slide.text}
                     </p>
                   )}
                 </div>
                 {/* Image Section */}
-                <div className="w-full md:w-1/2 text-center">
+                <div className="w-full md:w-1/2 text-center mt-4 md:mt-0">
                   <img
                     src={slide.image}
                     alt={slide.alt}
-                    className="max-w-[70%] h-[60vh] rounded-[10px] shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-transform duration-300 ease-in-out mt-[4%] object-cover"
+                    className="max-w-full sm:max-w-[70%] h-[40vh] sm:h-[60vh] rounded-[10px] shadow-[0_0_10px_rgba(0,0,0,0.5)] transition-transform duration-300 ease-in-out object-cover mx-auto"
                   />
                 </div>
               </div>
