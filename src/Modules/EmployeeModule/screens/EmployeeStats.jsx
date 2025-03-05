@@ -4,6 +4,7 @@ import { fetchChartData } from "../../../Redux/admin_model/DomainCountTicket/cha
 import MyBarChart from "../../../components/barGraph";
 import OutageMap from "../../../components/OutageMap";
 import { fetchTicketsCount } from "../../../Redux/admin_model/outage/outageActions";
+import { fetchTimeData } from "../../../Redux/employee_module/stats/statsActions";
 
 const EmployeeStats = () => {
     const dispatch = useDispatch();
@@ -27,6 +28,10 @@ const EmployeeStats = () => {
 
     useEffect(() => {
         dispatch(fetchChartData());
+    }, [dispatch]);
+
+    useEffect(()=>{
+      dispatch(fetchTimeData());
     }, [dispatch]);
 
     const time = useMemo(()=>{
