@@ -5,8 +5,6 @@ export const fetchTicketStats = (id) => async (dispatch) => {
   dispatch({ type: FETCH_TICKETS_STATUS_REQUEST });
   try {
     const { OPEN: open, PENDING: inProgress, CLOSED: closed } = await getTicketStatus(id);
-    console.log(open, inProgress, closed);
-    
     dispatch({
       type: FETCH_TICKETS_STATUS_SUCCESS,
       payload: { open, inProgress, closed },
