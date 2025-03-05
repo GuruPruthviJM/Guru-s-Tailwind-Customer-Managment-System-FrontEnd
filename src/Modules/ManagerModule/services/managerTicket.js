@@ -11,7 +11,7 @@ export const fetchTicketsFromAPI = async (ticketStatus, ticketId) => {
   }
   try {
     const response = await axios.get(
-      `http://18.209.26.169:8000/api/managers/${sessionObject.user.userName}/ticketStatus/${ticketStatus}/${ticketId}`,
+      `http://18.209.26.169:5000/api/managers/${sessionObject.user.userName}/ticketStatus/${ticketStatus}/${ticketId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
