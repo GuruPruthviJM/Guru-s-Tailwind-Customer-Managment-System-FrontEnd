@@ -58,9 +58,6 @@ const ManagerTicketList = () => {
                 Ticket ID
               </th>
               <th className="py-3 px-6 border border-gray-200 text-white text-lg">
-                Ticket Type
-              </th>
-              <th className="py-3 px-6 border border-gray-200 text-white text-lg">
                 Ticket Description
               </th>
               <th className="py-3 px-6 border border-gray-200 text-white text-lg">
@@ -80,9 +77,6 @@ const ManagerTicketList = () => {
               >
                 <td className="py-3 px-6 border-t border-gray-200 text-blue-600 group-hover:bg-black group-hover:text-white text-center">
                   {ticket.ticketId}
-                </td>
-                <td className="py-3 px-6 border-t border-gray-200 group-hover:bg-black group-hover:text-white text-center">
-                  {ticket.ticketType}
                 </td>
                 <td className="py-3 px-6 border-t border-gray-200 group-hover:bg-black group-hover:text-white text-center">
                   {ticket.ticketDescription}
