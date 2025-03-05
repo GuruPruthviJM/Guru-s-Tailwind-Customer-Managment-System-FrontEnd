@@ -145,7 +145,7 @@ const StatusTickets = () => {
             <MyBarChart data={transformedChartData} attribute={"noOfTickets"} color={"#8884d8"} />
           )}
         </div>
-        <div>
+        {/* <div>
           <h2 className="text-3xl font-bold mb-4">
             Avg Response and Avg Resolution Time
           </h2>
@@ -154,7 +154,7 @@ const StatusTickets = () => {
           {!timeLoading && !timeError && timeData && (
             <MyBarChart data={transformedTimeData} attribute={"value"} color={"purple"} />
           )}
-        </div>
+        </div> */}
       </div>
 
       <hr className="my-8 border-gray-300" />
