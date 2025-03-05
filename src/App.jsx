@@ -26,7 +26,7 @@ import OtpForm from './components/SignIn/OtpForm';
 import AdminHome from './Modules/AdminModule/screen/AdminHomeScreen';
 import TicketRaise from './Modules/CustomerModule/screen/TicketRaise';
 import AddEmployee from './Modules/AdminModule/screen/AddEmployee';
-import UpdateEmployeePanel from './Modules/AdminModule/screen/updateEmployee';
+import UpdateEmployeePanel from './Modules/AdminModule/screen/UpdateEmployee';
 import DeleteEmployeePanel from './Modules/AdminModule/screen/DeleteEmployee';
 import TicketDetails from './Modules/CustomerModule/screen/TicketDetails';
 import EmployeeTicketDetails from './Modules/EmployeeModule/screens/TicketDetails';
