@@ -16,6 +16,8 @@ const initialState = {
           loading: true,
         };
       case FETCH_TICKETS_STATUS_SUCCESS:
+        console.log("Guru...");
+        
         return {
           ...state,
           loading: false,
