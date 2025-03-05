@@ -13,7 +13,6 @@ const ticketReducer = (state = initialState, action) => {
         case FETCH_TICKETS_TABLE_REQUEST:
             return { ...state, loading: true };
         case FETCH_TICKETS_TABLE_SUCCESS:
-            console.log(action.payload); // Debugging purpose
             return { ...state, loading: false, tickets: action.payload, error: '' };
         case FETCH_TICKETS_TABLE_FAILURE:
             return { ...state, loading: false, error: action.payload };
