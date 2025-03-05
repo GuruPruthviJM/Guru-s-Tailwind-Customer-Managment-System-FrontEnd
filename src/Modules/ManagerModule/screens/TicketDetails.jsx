@@ -12,7 +12,7 @@ const ManagerTicketDetails = () => {
   // Assume your Redux state now holds ticket details in "tickets"
   const { tickets, loading, error } = useSelector((state) => state.managerTicket);
   
-  const ticketDetails = tickets;
+  const ticketDetails = tickets[0];
   
   const { user } = useSelector((state) => state.auth);
   
