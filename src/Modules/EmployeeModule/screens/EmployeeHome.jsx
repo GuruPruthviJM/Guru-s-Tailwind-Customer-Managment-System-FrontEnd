@@ -8,7 +8,7 @@ const TicketParentComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { tickets, loading, error } = useSelector((state) => state.tickets);
+  const { tickets, loading, error } = useSelector((state) => state.ticketEmployeeReducer);
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {

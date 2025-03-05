@@ -23,6 +23,7 @@ import  employeeReducer from './admin_model/CRUD/readEmployeeReducer';
 import timeReducer from './employee_module/stats/statsReducer';
 import ticketManagerReducer from './manager_module/Tickets/ticketReducers'
 import ticketManagerTableReducer from './manager_module/managerTicketTable/managerTicketReducer';
+import ticketEmployeeReducer from './employee_module/Tickets/ticketReducers';
 
 const rootReducer = {
     tickets: ticketReducer,
@@ -49,6 +50,7 @@ const rootReducer = {
     time: timeReducer,
     managerTicket: ticketManagerReducer,
     ticketManagerTableReducer,
+    ticketEmployeeReducer,
 };
 
 export default rootReducer;
