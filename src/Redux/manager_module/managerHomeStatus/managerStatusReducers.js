@@ -25,8 +25,7 @@ const managerStatusReducer = (state = initialState, action) => {
         loading: false,
         open: action.payload.OPEN,
         inProgress: action.payload.PENDING,
-        closed: action.payload.CLOSED,
-        error: null
+        closed: action.payload.CLOSED
       };
     case FETCH_TICKETS_MANAGER_STATUS_FAILURE:
       return {
