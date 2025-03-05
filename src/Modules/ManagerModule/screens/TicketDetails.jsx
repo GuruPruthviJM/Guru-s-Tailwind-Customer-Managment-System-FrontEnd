@@ -11,6 +11,8 @@ const ManagerTicketDetails = () => {
 
   // Assume your Redux state now holds ticket details in "tickets"
   const { tickets, loading, error } = useSelector((state) => state.managerTicket);
+
+  const ticketDetails = tickets.find((ticket) => ticket.ticketId === ticketId);
   
   
   const { user } = useSelector((state) => state.auth);
@@ -22,10 +24,6 @@ const ManagerTicketDetails = () => {
       dispatch(fetchTickets(id, ticketId));
     }
   }, [dispatch, user]);
-  let ticketDetails={}
-  if(tickets instanceof Array){
-    ticketDetails = tickets[0];
-  }
 
   const renderValue = (key, value) => {
     // For ticket raise date, format as per Indian locale
