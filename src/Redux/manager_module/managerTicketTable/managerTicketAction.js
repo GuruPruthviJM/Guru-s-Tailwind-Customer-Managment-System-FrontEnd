@@ -5,10 +5,7 @@ export const fetchTicketsRequest = () => ({
     type: FETCH_TICKETS_TABLE_REQUEST,
 });
 
-export const fetchTicketsSuccess = (tickets) => ({
-    type: FETCH_TICKETS_TABLE_SUCCESS,
-    payload: tickets,
-});
+export const fetchTicketsSuccess = (tickets) => ({});
 
 export const fetchTicketsFailure = (error) => ({
     type: FETCH_TICKETS_TABLE_FAILURE,
@@ -22,8 +19,10 @@ export const fetchTickets = (managerId, ticketStatus) => {
         try {
             const tickets = await fetchTicketsFromAPI(managerId, ticketStatus); 
             console.log(tickets);
-            
-            dispatch(fetchTicketsSuccess(tickets));
+            dispatch({
+                type: FETCH_TICKETS_TABLE_SUCCESS,
+                payload: tickets,
+            });
         } catch (error) {
             console.log(error);
             dispatch(fetchTicketsFailure(error.message || 'Network Error'));
