@@ -22,6 +22,8 @@ const ManagerTicketDetails = () => {
     if (user?.user?.userName) {
       console.log(id, ticketId);
       dispatch(fetchTickets(id, ticketId));
+    }else{
+      navigate("/login");
     }
   }, [dispatch, user]);
 
