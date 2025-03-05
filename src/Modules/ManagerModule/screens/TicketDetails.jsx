@@ -25,7 +25,7 @@ const ManagerTicketDetails = () => {
     }
   }, [dispatch, user]);
 
-  console.log(ticketDetails);
+  console.log(tickets);
   
 
   const renderValue = (key, value) => {
