@@ -24,12 +24,6 @@ const ManagerTicketDetails = () => {
     }
   }, [dispatch, user]);
   
-  console.log(tickets);
-  // Helper function to conditionally style the status button based on ticketStatus
-
-  
-  
-  // Updated renderValue function to handle date formatting in Indian format
   const renderValue = (key, value) => {
     // For ticket raise date, format as per Indian locale
     if (key === "ticketRaiseDate" && value) {
