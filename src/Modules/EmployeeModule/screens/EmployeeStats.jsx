@@ -86,7 +86,7 @@ const EmployeeStats = () => {
         {/* Section: Avg Response & Resolution Time */}
         <div>
           <h2 className="text-3xl font-bold mb-4">
-            Avg Response and Avg Resolution Time
+            Avg Response and Resolution Time
           </h2>
           {chartLoading && <p className="text-center">Loading chart data...</p>}
           {chartError && <p className="text-center text-red-600">{chartError}</p>}
