@@ -21,6 +21,8 @@ export const fetchTickets = (managerId, ticketStatus) => {
         dispatch(fetchTicketsRequest());
         try {
             const tickets = await fetchTicketsFromAPI(managerId, ticketStatus); 
+            console.log(tickets);
+            
             dispatch(fetchTicketsSuccess(tickets));
         } catch (error) {
             dispatch(fetchTicketsFailure(error.message || 'Network Error'));
