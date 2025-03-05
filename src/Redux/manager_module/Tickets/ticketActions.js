@@ -24,14 +24,10 @@ export const fetchTickets = (id, ticketId) => {
   return async (dispatch) => {
     dispatch(fetchTicketsRequest());
     try {
-      // Replace the URL with your actual endpoint for fetching tickets
-      // console.log(userName);
-      
       const response = await fetchTicketsFromAPI(id, ticketId)
-      console.log("gur", response);
-      
       dispatch(fetchTicketsSuccess(response));
     } catch (error) {
+      console.log(error);
       dispatch(
         fetchTicketsFailure(
           error.response?.data?.message || "Failed to fetch tickets"
