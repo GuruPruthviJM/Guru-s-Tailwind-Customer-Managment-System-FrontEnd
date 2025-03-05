@@ -5,12 +5,12 @@ import OutageMap from "../../../components/OutageMap";
 import MyBarChart from "../../../components/barGraph";
 import { fetchTicketsCount } from "../../../Redux/admin_model/outage/outageActions";
 import { fetchChartData } from "../../../Redux/admin_model/DomainCountTicket/chartActions";
-import { fetchTimeData } from "../../../Redux/employee_module/stats/statsActions";
+// import { fetchTimeData } from "../../../Redux/employee_module/stats/statsActions";
 import { fetchTicketStats } from "../../../Redux/manager_module/managerHomeStatus/managerStatusActions";
 
 const StatusTickets = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   // Manager stats
   const { open, inProgress, closed, loading, error } = useSelector(
