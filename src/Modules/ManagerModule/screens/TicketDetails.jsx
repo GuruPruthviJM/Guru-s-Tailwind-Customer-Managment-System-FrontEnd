@@ -26,18 +26,6 @@ const ManagerTicketDetails = () => {
   
   console.log(tickets);
   // Helper function to conditionally style the status button based on ticketStatus
-  const getStatusButtonStyle = (status) => {
-    switch (status.toLowerCase()) {
-      case "open":
-        return "bg-green-500 hover:bg-green-700";
-      case "pending":
-        return "bg-yellow-500 hover:bg-yellow-700";
-      case "closed":
-        return "bg-red-500 cursor-not-allowed";
-      default:
-        return "bg-blue-500 hover:bg-blue-700";
-    }
-  };
 
   
   
