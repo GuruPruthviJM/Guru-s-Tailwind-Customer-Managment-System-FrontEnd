@@ -19,12 +19,12 @@ const ManagerTicketDetails = () => {
   // Fetch ticket details when the component mounts
   useEffect(() => {
     if (user?.user?.userName) {
-      console.log(id, ticketId);
+      // console.log(id, ticketId);
       dispatch(fetchTickets(id, ticketId));
     }
   }, [dispatch, user]);
 
-  console.log(ticketDetails);
+  // console.log(ticketDetails);
   
   
   const renderValue = (key, value) => {
