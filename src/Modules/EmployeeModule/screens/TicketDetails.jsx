@@ -10,7 +10,7 @@ const EmployeeTicketDetails = () => {
   const { id } = useParams();
 
   // Assume your Redux state now holds ticket details in "tickets"
-  const { tickets, loading, error } = useSelector((state) => state.tickets);
+  const { tickets, loading, error } = useSelector((state) => state.ticketEmployeeReducer);
   const ticketDetails = tickets.find((ticket) => ticket.ticketId === id);
 
   const { user } = useSelector((state) => state.auth);
