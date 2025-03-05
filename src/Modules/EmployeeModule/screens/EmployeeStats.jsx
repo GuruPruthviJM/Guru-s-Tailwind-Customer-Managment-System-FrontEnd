@@ -28,10 +28,8 @@ const EmployeeStats = () => {
   }, [dispatch, chartData]);
 
   useEffect(() => {
-    if (!timeData || Object.keys(timeData).length === 0) {
       dispatch(fetchTimeData());
-    }
-  }, [dispatch, timeData]);
+  }, [dispatch]);
 
   // ✅ Memoize time data processing (Prevent unnecessary calculations)
   const time = useMemo(() => {
@@ -92,7 +90,7 @@ const EmployeeStats = () => {
           </h2>
           {chartLoading && <p className="text-center">Loading chart data...</p>}
           {chartError && <p className="text-center text-red-600">{chartError}</p>}
-          {!chartLoading && !chartError && time.length > 0 ? (
+          {!chartLoading && !chartError ? (
             <MyBarChart data={time} color={"purple"} attribute={"value"} />
           ) : (
             <p className="text-center">No data available</p>
