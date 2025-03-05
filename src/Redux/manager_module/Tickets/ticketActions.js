@@ -28,7 +28,7 @@ export const fetchTickets = (id, ticketId) => {
       // console.log(userName);
       
       const response = await fetchTicketsFromAPI(id, ticketId)
-      console.log(response);
+      console.log("gur", response);
       
       dispatch(fetchTicketsSuccess(response));
     } catch (error) {
