@@ -16,10 +16,6 @@ const ManagerTicketList = () => {
 
   const { tickets, loading, error } = useSelector((state) => state.ticketManagerTableReducer);
 
-  const handleClick = (ticketId) => {
-    navigate(`${ticketId}`);
-  };
-
   if (loading)
     return (
       <div className="container mx-auto mt-5 text-center">
@@ -72,7 +68,6 @@ const ManagerTicketList = () => {
             {tickets.map((ticket, index) => (
               <tr
                 key={index}
-                onClick={() => handleClick(ticket.ticketId)}
                 className="cursor-pointer transition duration-300 group odd:bg-[#f2f2f2] even:bg-white hover:bg-[#438e9c]"
               >
                 <td className="py-3 px-6 border-t border-gray-200 text-blue-600 group-hover:bg-black group-hover:text-white text-center">
